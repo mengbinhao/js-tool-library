@@ -27,7 +27,14 @@ ES6
         不要用箭头
         函数、属性简写
     5 let/const
-        没有预解析  不存在变量提升
+        1 作用域为{}
+        2 TDZ
+        3 重复let a 则error
+        const还有4 只有一次赋值机会 必须在声明的时候立马赋值
+        关于是否变量提升:
+        let 的「创建」过程被提升了，但是初始化没有提升。
+        var 的「创建」和「初始化」都被提升了。
+        function 的「创建」「初始化」和「赋值」都被提升了。
     6 String(includes startWith endWith repeat)
         Number(isNaN parseInt parseFloat isInteger isFinite)
         Array(Array.from(x) Array.of(x) fill includes copyWithin find(fn) findIndex(fn) arr.keys() arr.entries())
