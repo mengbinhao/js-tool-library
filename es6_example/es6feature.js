@@ -58,7 +58,6 @@ ES6
                 name : 'my name',
                 age : 'my age',
                 getName  = function(){  return 'my name' }
-            RegExp Preview and Editor}
         import
             相对/绝对路径
             只会导入一次  无论引入多少次
