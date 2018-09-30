@@ -3,6 +3,10 @@
 //Array
 const sortArrRandom = (arr) => arr.sort((a, b) => Math.random() - 0.5);
 
+//create an array, length = n
+//Array.from(n)
+//Array.apply(null, {length:5})
+
 //the key is length and the source of push
 // var arrLike = {
 //     "2" : "a",
@@ -29,6 +33,9 @@ const sortArrRandom = (arr) => arr.sort((a, b) => Math.random() - 0.5);
 // // []
 // console.log(Object.keys(a));
 
+
+// 1 不能区分'4'和4
+// 2 对象一律得到的是[object Object]
 function arrMergeAndRemoveRepetition() {
     //ES6
     //let arr = [].concat.apply([], arguments);
@@ -942,6 +949,6 @@ Element.prototype.insertAfter = function (targerNode, afterNode) {
     }
 }
 
-function arrMergeAndRemoveRepetition(arr) {
+function arrMergeAndRemoveRepetition() {
     return Array.from(new Set([].concat.apply([], arguments)));
 }
