@@ -3,35 +3,30 @@
 //Array
 const sortArrRandom = (arr) => arr.sort((a, b) => Math.random() - 0.5);
 
-//create an array, length = n
-//Array.from(n)
-//Array.apply(null, {length:5})
-
 //the key is length and the source of push
-// var arrLike = {
-//     "2" : "a",
-//     "3" : "b",
-//     length : 2,
-//     push : Array.prototype.push
-// }
-// arrLike.push("c");
-// arrLike.push("d");
-// console.log(arrLike);
+let arrLike = {
+    "2" : "a",
+    "3" : "b",
+    length : 2,
+    push : Array.prototype.push
+}
+arrLike.push("c");
+arrLike.push("d");
+//console.log(arrLike);
 
 // 空数组遍历不到
 // undefined可以遍历
-// var a = [, , ,];
-// var b = [undefined,undefined,undefined];
-// // 不产生任何输出
-// a.forEach(function (x, i) {
-//   console.log(i + '. ' + x);
-// })
-// // 不产生任何输出
-// for (var i in a) {
-//   console.log(i);
-// }
-// // []
-// console.log(Object.keys(a));
+let arrEmpety = [, , ,];
+let arrUndefined = [undefined,undefined,undefined];
+// 不产生任何输出
+arrEmpety.forEach(function (x, i) {
+  console.log(i + '. ' + x);
+})
+// 不产生任何输出
+for (var i in arrEmpety) {
+  console.log(i);
+}
+// console.log(Object.keys(arrEmpety));
 
 
 // 1 不能区分'4'和4
@@ -61,18 +56,16 @@ function arrMergeAndRemoveRepetition() {
 }
 //console.log(arrMergeAndRemoveRepetition([1,2,3],[2,3,4],[3,4,5,6,7]));
 
-// var arr1 = "john".split('');
-// var arr2 = arr1.reverse();
-// var arr3 = "jones".split('');
-// arr2.push(arr3);
-// // console.log("array 1: length=" + arr1.length + " last=" + arr1.slice(-1));
-// // console.log("array 2: length=" + arr2.length + " last=" + arr2.slice(-1));
+let arr1 = "john".split('');
+let arr2 = arr1.reverse();
+let arr3 = "jones".split('');
+arr2.push(arr3);
+// console.log("array 1: length=" + arr1.length + " last=" + arr1.slice(-1));
+// console.log("array 2: length=" + arr2.length + " last=" + arr2.slice(-1));
 
 
 // randon replacement an array
-var array = [1, 5, 9, 6, 2, 6];
-
-function tempArray(array) {
+function randonReplacementArray(array) {
     var len = array.length;
     var temp = [];
     while (len--) {
@@ -81,7 +74,7 @@ function tempArray(array) {
     }
     return temp;
 }
-//console.log(tempArray(array))
+//console.log(tempArray([1, 5, 9, 6, 2, 6]))
 
 
 //Function
@@ -97,6 +90,7 @@ const addArrayElements = splat(function (x, y) {
 });
 //console.log(addArrayElements([1,2]));
 
+
 //safe constrctor
 function Person(name, age, job) {
     //ES6
@@ -110,16 +104,6 @@ function Person(name, age, job) {
     }
 }
 
-//simulate bind
-var objShow = {
-    value: 1
-};
-
-function showValue(name, age) {
-    console.log("-----" + this.value + " " + name + " " + age);
-    return this.value + " " + name + " " + age;
-}
-
 Function.prototype.simulateBind = function () {
     var fn = this;
     var context = arguments[0];
@@ -129,9 +113,6 @@ Function.prototype.simulateBind = function () {
         return fn.apply(context, args.concat(_args));
     }
 }
-const reuslt = showValue.simulateBind(objShow, "jack", 33);
-// console.log(reuslt());
-
 
 
 //RegExp
@@ -215,19 +196,6 @@ const addListener = (ele, type, handle) => {
 //     }
 // }
 
-function clickMe(event) {
-    var button = event.target;
-    var text = button.innerText;
-    var count = text.substr(text.indexOf(":") + 1);
-    if (count.length > 0) {
-        count = parseInt(count);
-        count++;
-    } else {
-        count = 1;
-    }
-    button.innerText = "click Me:" + count;
-}
-
 
 
 //DOM
@@ -272,6 +240,7 @@ const getByteLength = (str) => {
         count = len,
         i;
     for (i = 0; i < len; i++) {
+        // in case has chinese
         if (str.charCodeAt(i) > 255) {
             count++;
         }
@@ -301,7 +270,7 @@ const caculateFibonacci = (n) => {
 //闭包是建立在函数内部的子函数,由于其可以访问上级作用域的原因,即使上级函数执行完
 //作用域也不会随之销毁,这时的子函数也就是闭包拥有了访问上级作用域中的变量的权限
 //上级作用域执行完成后作用域内的值也不会被销毁
-//场景  AJAX回调  时间绑定回调   setTimeout
+//场景  AJAX回调  事件绑定回调   setTimeout
 const fibClosure = (function () {
     //cache
     const result = [];
@@ -339,7 +308,7 @@ function memorize(fn) {
         }
     }
 }
-var newFactorial = memorize(caculatefactorial);
+let newFactorial = memorize(caculatefactorial);
 // console.time("first");
 // console.log(newFactorial(10));
 // console.timeEnd("first");
@@ -360,6 +329,7 @@ function isPalindrome(str) {
 // console.log(isPalindrome("levels"));
 // console.log(isPalindrome("A car, a man, a maraca"));
 
+
 //arguments
 function sum(x, y) {
     if (y !== undefined) {
@@ -378,23 +348,15 @@ function sum(x, y) {
 //Object
 //Object
 //Object
-// var inherit = (function() {
-//     var F = function() {};
-//     return function(Target, Origin) {
-//         F.prototype = Origin.prototype;
-//         Target.prototype = new F();
-//         Target.prototype.constructor = Target;
-//         Target.uber = Origin.prototype;
-//     }
-// }());
-
-//javascript会字符串化参数值  a['object object']
-// var a={},
-//     b={key:'b'},
-//     c={key:'c'};
-//     a[b]=123;
-//     a[c]=456;
-// //console.log(a[b]);
+var inherit = (function() {
+    var F = function() {};
+    return function(Target, Origin) {
+        F.prototype = Origin.prototype;
+        Target.prototype = new F();
+        Target.prototype.constructor = Target;
+        Target.uber = Origin.prototype;
+    }
+}());
 
 function Traverse(p_element, p_callback) {
     p_callback(p_element);
@@ -496,7 +458,6 @@ function TwoDShape() {}
 
 //augment TwoDShape
 TwoDShape.prototype.name = "TwoDShape";
-
 
 function Triangle(side, height) {
     this.side = side;
@@ -603,16 +564,9 @@ function getName() {
 
 //promise 简单说就是一个容器,里面保存着某个未来才会结束的事件的结果
 //promise也是一个对象 从它可以获取异步操作的信息
-//promise提供统一的API 各种操作都可以用重阳的方法处理
+//promise提供统一的API 各种操作都可以用同样的方法处理
 //开发者不需要再关注其底层的时序和结果
 //promise状态具有不可逆和不受外界影响
-
-function mockIsNaN(n) {
-    //return n !== n;
-    return typeof n === "number" && window.isNaN(n);
-}
-//console.log(mockIsNaN(5*"ab"));
-//console.log(mockIsNaN("what"));
 
 //素数
 const isPrimeNumber = (num) => {
@@ -666,6 +620,8 @@ for (var i = 1; i < 100000; i++) {
 var d4 = new Date();
 //console.log("+链接用时：" + (d4.getTime() - d3.getTime()) + "");
 
+
+//分批次添加DOM
 (() => {
     var container = document.querySelector('.list');
     if (!container) return;
@@ -748,16 +704,6 @@ const printInfo = (node) => {
 // kickoff
 traverse(document.querySelector('.root')); */
 
-
-
-// (function(){
-//     var a = b = 3;
-//   })();
-
-// console.log("a defined? " + (typeof a !== 'undefined'));
-// console.log("b defined? " + (typeof b !== 'undefined'));
-
-
 function queryURLParamaterByRegex(url) {
     let obj = {}
     let reg = /([^?=&]+)=([^?=&]+)/g;
@@ -777,7 +723,7 @@ String.prototype.reverse = function () {
     return Array.prototype.reverse.apply(this.split('')).join('');
 };
 
-String.prototype.simulateTrim1 = function () {
+String.prototype.simulateTrim = function () {
     return this.replace(/^\s+|\s+$/g, '');
 };
 
@@ -786,7 +732,7 @@ function getBuitlInType(obj) {
     return str.match(/\[object (.*?)\]/)[1].toLowerCase();
 }
 
-function deepClone1(target, origin) {
+function deepClone(target, origin) {
     let target = target || {},
         toStr = Object.prototype.toString,
         arrStr = "[object Array]";
@@ -799,7 +745,7 @@ function deepClone1(target, origin) {
         if (origin.hasOwnProperty(prop)) {
             if (origin[prop] != null && typeof (origin[prop]) === "object") {
                 target[prop] = (toStr.call(origin[prop]) === arrStr) ? [] : {};
-                deepClone1(target[prop], origin[prop]);
+                deepClone(target[prop], origin[prop]);
             } else {
                 target[prop] = origin[prop];
             }
@@ -807,62 +753,11 @@ function deepClone1(target, origin) {
     }
 }
 
-let inherit = (function () {
-    let F = function () {};
-    return function (Target, Origin) {
-        F.prototype = Origin.prototype;
-        Target.prototype = new F();
-        Target.prototype.constructor = Target;
-        Target.uber = Origin.prototype;
-    }
-}());
-
-/**
- * @description  圣杯模式
- */
-let inherit = (function () {
-    let F = function () {};
-    return function (Target, Origin) {
-        F.prototype = Origin.prototype;
-        Target.prototype = new F();
-        Target.prototype.constructor = Target;
-        Target.uber = Origin.prototype;
-    }
-}());
-
 function simulateNew(constructor, params) {
     let obj = Object.create(constructor.prototype);
     let result = constructor.call(obj, params);
     //in case constructor return a simple type
     return (typeof result === 'object' && result != null) ? result : obj;
-}
-
-
-function simulateBind() {
-    if (!("bind" in Function.prototype)) {
-        Function.prototype.bind = function () {
-            let fn = this;
-            let context = arguments[0];
-            let args = [].slice.call(arguments, 1);
-            return function () {
-                fn.apply(context, args);
-            };
-        };
-    }
-}
-
-function simulateIsArray(target) {
-    if (Array.isArray) {
-        return Array.isArray(target);
-    } else {
-        return Object.prototype.toString.call(target) === "[object Array]";
-    }
-}
-
-function isEmptyObject(obj) {
-    if (!obj || typeof obj !== 'object' || Array.isArray(obj))
-        return false;
-    return !Object.keys(obj).length;
 }
 
 let curry = function (fn) {
@@ -887,11 +782,6 @@ let curryFormalParameter = function (fn, args) {
     }
 }
 
-/**
- * @description   simulate call
- * @param  {object} context
- * @return {any} result
- */
 Function.prototype.simulateCall = function (context) {
     var context = context || window;
     context.fn = this;
@@ -902,12 +792,6 @@ Function.prototype.simulateCall = function (context) {
     return result;
 }
 
-/**
- * @description   simulate apply
- * @param  {object} context
- * @param  {array} arr
- * @return {any} result
- */
 Function.prototype.simulateApply = function (context, arr) {
     var context = context || window;
     context.fn = this;
@@ -927,19 +811,6 @@ Function.prototype.simulateApply = function (context, arr) {
 // }
 //test.simulateCall({name : 123});
 
-/**
- * @description   simulate bind
- * @return {function} function
- */
-Function.prototype.simulateBindBasic = function () {
-    var fn = this;
-    var context = arguments[0];
-    var args = [].slice.call(arguments, 1);
-    return function () {
-        return fn.apply(context, args.concat([].slice.call(arguments, 0)));
-    }
-}
-
 Element.prototype.insertAfter = function (targerNode, afterNode) {
     var beforeNode = afterNode.nextElementSibling;
     if (beforeNode == null) {
@@ -947,8 +818,4 @@ Element.prototype.insertAfter = function (targerNode, afterNode) {
     } else {
         this.insertBefore(targerNode, beforeNode);
     }
-}
-
-function arrMergeAndRemoveRepetition() {
-    return Array.from(new Set([].concat.apply([], arguments)));
 }

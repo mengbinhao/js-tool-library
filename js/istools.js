@@ -13,6 +13,8 @@
 // (function getArg(){
 //     arg=arguments;
 // })();
+//document
+//window
 
 // console.log(typeof und);  // undefined
 // console.log(typeof nul);  // object
@@ -22,25 +24,29 @@
 // console.log(typeof obj);  // object
 // console.log(typeof arr);  // object
 // console.log(typeof fun);  // function
-// console.log(typeof date);  // object
+// console.log(typeof date); // object
 // console.log(typeof reg);  // object
 // console.log(typeof err);  // object
 // console.log(typeof arg);  // object
+// console.log(typeof document);  // object
+// console.log(typeof window);  // object
 
 // let toString=Object.prototype.toString;
 
-// console.log(toString.call(und));  // [object Undefined]
-// console.log(toString.call(nul));  // [object Null]
-// console.log(toString.call(boo));  // [object Boolean]
-// console.log(toString.call(num));  // [object Number]
-// console.log(toString.call(str));  // [object String]
-// console.log(toString.call(obj));  // [object Object]
-// console.log(toString.call(arr));  // [object Array]
-// console.log(toString.call(fun));  // [object Function]
-// console.log(toString.call(date));  // [object Date]
-// console.log(toString.call(reg));  // [object RegExp]
-// console.log(toString.call(err));  // [object Error]
-// console.log(toString.call(arg));  // [object Arguments]
+// console.log(toString.call(und));       // [object Undefined]
+// console.log(toString.call(nul));       // [object Null]
+// console.log(toString.call(boo));       // [object Boolean]
+// console.log(toString.call(num));       // [object Number]
+// console.log(toString.call(str));       // [object String]
+// console.log(toString.call(obj));       // [object Object]
+// console.log(toString.call(arr));       // [object Array]
+// console.log(toString.call(fun));       // [object Function]
+// console.log(toString.call(date));      // [object Date]
+// console.log(toString.call(reg));       // [object RegExp]
+// console.log(toString.call(err));       // [object Error]
+// console.log(toString.call(arg));       // [object Arguments]
+// console.log(toString.call(document));  // [object HTMLDocument]
+// console.log(toString.call(window));    // [object global] window是全局对象global的引用
 
 /**
  * @desc 数据类型检测
