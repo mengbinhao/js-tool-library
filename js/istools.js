@@ -48,13 +48,12 @@
  * @return {String} 类型字符串
  */
 function type(obj) {
-    let toString = Object.prototype.toString;
     let toType = {};
-    let typeArr = ['Undefined', 'Null', 'Boolean', 'Number', 'String', 'Object', 'Array', 'Function', 'Date', 'RegExp', 'Error', 'Arguments']
+    let typeArr = ['Undefined', 'Null', 'Boolean', 'Number', 'String', 'Object', 'Array', 'Function', 'Date', 'RegExp', 'Error', 'Arguments', 'Symbol']
     typeArr.map(function (item, index) {
         toType["[object " + item + "]"] = item.toLowerCase();
     })
-    return typeof obj !== "object" ? typeof obj : toType[toString.call(obj)];
+    return typeof obj !== "object" ? typeof obj : toType[Object.prototype.toString.call(obj)];
 }
 
 /**

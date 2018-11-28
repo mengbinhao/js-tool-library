@@ -97,3 +97,33 @@ function getTimeFormatAll(time) {
 
     return [year, month, day].join('-') + '  ' + hour + ':' + min + ':' + second
 }
+
+/*@param date 时间戳*/
+/*@param format 时间格式*/
+function dateFormat(date,format){
+    if(!format || typeof format !== 'string'){
+      console.error('format is undefiend or type is Error');
+      return '';
+    }
+
+    date = date instanceof Date? date : (typeof date === 'number'|| typeof date === 'string')? new Date(date): new Date();
+
+    //解析
+    var formatReg = {
+      'y+': date.getFullYear(),
+      'M+': date.getMonth()+1,
+      'd+': date.getDate(),
+      'h+': date.getHours(),
+      'm+': date.getMinutes(),
+      's+': date.getSeconds()
+    }
+    for(var reg in formatReg){
+      if(new RegExp(reg).test(format)){
+            var match = RegExp.lastMatch;
+            format = format.replace(match, formatReg[reg]< 10 ? '0'+formatReg[reg]: formatReg[reg].toString() );
+      }
+    }
+    return format;
+}
+//dateFormat(new Date().getTime(),'yyyy-MM-dd hh:mm:ss')
+//dateFormat(new Date().getTime(),'MM-dd-yy hh:mm:ss')

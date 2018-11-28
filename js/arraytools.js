@@ -21,6 +21,18 @@ function clearArray(arr) {
 }
 
 /**
+ * @param {array} arr want to be checked
+ * @description check if target array is empty.
+ * @returns {boolean} true or false
+ */
+function isEmptyArray(array) {
+    if(!isArray(array)) {
+        return false
+    }
+    return array.length > 0 ? false : true
+}
+
+/**
  * @param {array} arr want to be changed length
  * @param {number} newLength new length if an array
  * @description change the length of an array (add / minus)
