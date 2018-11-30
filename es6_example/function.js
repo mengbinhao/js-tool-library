@@ -105,6 +105,7 @@ const headAndTail = (head, ...tail) => [head, tail]; //work with rest
 // 3 不能用作构造函数
 // 4 不可用yield 因此不能用Generator函数
 // 5 不能通过call apply bind改变this
+// 6 避免定义对象的方法 避免定义原型方法 避免事件回调
 function foo() {
 	setTimeout(() => {
 		console.log("id:" + this.id);
