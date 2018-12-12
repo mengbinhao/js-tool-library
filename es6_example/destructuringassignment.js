@@ -51,6 +51,10 @@ for (let [value] of map) {
   //console.log("value is " + value);
 }
 
+//排除不需要的属性
+let { ability, wife:{name}, ...others } = user;
+
+
 
 //---------------------------------------------------array destructuring
 //某数据具有Iterator接口(var let const Set)即可解构
@@ -63,6 +67,7 @@ let [head,...tail] = [1,2,3,4]
 let [x1,y1,...z1] = ['a'];  // a, undefine  []
 var [foo1] = [];
 var [foo2,bar2] = [1];
+let { 2: country, 4: state } = [1997, 'John Doe', 'US', 'john@doe.com', 'New York'];
 
 //不完全解构
 let [x2,y2] = [1,2,3];
