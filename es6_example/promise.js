@@ -57,7 +57,6 @@ var prepareTea = function() {
     });
 }
 
-//not async invoke
 // boilWater().then(function() {
 //     return washGlass();
 // }).then(function() {
@@ -66,7 +65,7 @@ var prepareTea = function() {
 //     console.log("over");
 // })
 
-//async invoke
+
 // Promise.all([boilWater(), washGlass(), prepareTea()]).then(() => {
 //     console.log("async Promise over");
 // });
@@ -89,3 +88,38 @@ var prepareTea = function() {
 // });
 
 // promise.then(function(value) {console.log(value)});
+
+//example
+function getNews(url) {
+    let promise = new Promise((resolve, reject) => {
+        //初始化promise状态为pending
+        //启动异步任务
+        let request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if(request.readyState === 4){
+                if(request.status === 200){
+                    let news = request.response;
+                    resolve(news);
+                }else{
+                    reject('请求失败了。。。');
+                }
+            }
+        };
+        request.responseType = 'json';//设置返回的数据类型
+        request.open("GET", url);//规定请求的方法，创建链接
+        request.send();//发送
+    })
+    return promise;
+}
+
+getNews('http://localhost:3000/news?id=2')
+        .then((news) => {
+            return getNews('http://localhost:3000' + news.commentsUrl);
+        }, (error) => {
+            console.log(error);
+        })
+        .then((comments) => {
+            console.log(comments);
+        }, (error) => {
+            console.log(error);
+        })

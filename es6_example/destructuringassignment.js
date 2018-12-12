@@ -21,6 +21,7 @@ var {foo, bar} = exampleDestructuring2();
 function f1([x,y,z]){}
 f1([1,2,3]);
 
+//不需要参数顺序
 function f2({x,y,z}){}
 f2({z:3,y:2,x:1});
 
@@ -67,7 +68,7 @@ var [foo2,bar2] = [1];
 let [x2,y2] = [1,2,3];
 let [x5,[y5],z5] = [1,[2,3],4];
 
-//若等号右边不是可遍历解构
+//若等号右边不是具有Iterator接口的对象
 //let [foo9] = 1;  //error
 
 //Set
@@ -84,6 +85,10 @@ let {length:len} = "hello";
 //---------------------------------------------------object destructuring
 var {fooObj, barObj} = {fooObj: "aaa1", barObj:"bbb1"};
 var {bazObj} = {foo: "aaa2", bar:"bbb2"}; //undefined
+
+let obj = {d: 'aaaa', e: {f: 'bbbb'}}
+let {d, e:{f}} = obj
+
 //属性名不一样
 var {foo2Obj:foo3Obj} = {foo2Obj: "aaa3", bar:"bbb3"};  //foo3Obj = aaa3
 

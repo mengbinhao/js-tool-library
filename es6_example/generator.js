@@ -13,3 +13,14 @@ var hw = helloWorldGenerator();
 // console.log(hw.next());
 // console.log(hw.next());
 // console.log(hw.next());
+
+let obj = {name: 'jack', age: 33}
+obj[Symbol.iterator] = function* myGenerator() {
+    yield 1
+    yield 2
+    yield 3
+}
+
+for (let i of obj) {
+    console.log(i);
+}
