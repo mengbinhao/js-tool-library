@@ -35,3 +35,8 @@ let map = new Map([
 	[3, "three"]
 ]);
 //console.log([...map.keys()]);
+
+//合并对象
+let obj1 = {name:'Jack'}
+let obj2 = {age:33}
+let obj3 = {...obj1, ...obj2}
