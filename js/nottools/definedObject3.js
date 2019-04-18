@@ -50,7 +50,7 @@ SuperType.prototype.getSuperValue = function() {
 function SubType() {
 	this.subProperty = false;
 }
-//实现继承！！！！！！！！！
+//实现继承
 SubType.prototype = new SuperType();
 
 //不论是定义新方法还是override父类的方法都需要在继承后
