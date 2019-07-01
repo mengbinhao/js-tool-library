@@ -18,10 +18,9 @@
  * @returns {string} the builtIn type
  */
 function getBuitlInType(obj) {
-    let str = Object.prototype.toString.call(obj);
-    return str.match(/\[object (.*?)\]/)[1].toLowerCase();
+  let str = Object.prototype.toString.call(obj)
+  return str.match(/\[object (.*?)\]/)[1].toLowerCase()
 }
-
 
 /**
  * @description  get builtIn type
@@ -29,27 +28,26 @@ function getBuitlInType(obj) {
  * @returns {string} the builtIn type
  */
 function getBuitlInType2(target) {
-    let ret = typeof (target);
-    let template = {
-        "[object Array]": "Array",
-        "[object Object]": "Object",
-        "[object Number]": "number - object",
-        "[object Boolean]": "boolean - object",
-        "[object String]": "string - object",
-        "[object RegExp]": "RegExp",
-        "[object Date]": "Date",
-        "[object Error]": "Error"
-    };
-    if (target == null) {
-        return null;
-    } else if (ret == "object") {
-        let str = Object.prototype.toString.call(target);
-        return template[str];
-    } else {
-        return ret;
-    }
+  let ret = typeof target
+  let template = {
+    '[object Array]': 'Array',
+    '[object Object]': 'Object',
+    '[object Number]': 'number - object',
+    '[object Boolean]': 'boolean - object',
+    '[object String]': 'string - object',
+    '[object RegExp]': 'RegExp',
+    '[object Date]': 'Date',
+    '[object Error]': 'Error'
+  }
+  if (target == null) {
+    return null
+  } else if (ret == 'object') {
+    let str = Object.prototype.toString.call(target)
+    return template[str]
+  } else {
+    return ret
+  }
 }
-
 
 /**
  * @description  check prop belongs to which object
@@ -58,10 +56,10 @@ function getBuitlInType2(target) {
  * @returns {object} result object
  */
 function getDefiningObject(obj, prop) {
-    while (obj && !{}.hasOwnProperty.call(obj, prop)) {
-        obj = Object.getPrototypeOf(obj);
-    }
-    return obj;
+  while (obj && !{}.hasOwnProperty.call(obj, prop)) {
+    obj = Object.getPrototypeOf(obj)
+  }
+  return obj
 }
 
 /**
@@ -71,7 +69,7 @@ function getDefiningObject(obj, prop) {
  * @returns {boolean} true or false
  */
 function hasProp(obj, prop) {
-    return obj != null && Object.prototype.hasOwnProperty.call(obj, prop);
+  return obj != null && Object.prototype.hasOwnProperty.call(obj, prop)
 }
 
 /*
@@ -85,65 +83,65 @@ function hasProp(obj, prop) {
     使用  extend(target, ...source)
  */
 function extend() {
-    var args = Array.prototype.slice.call(arguments);
-    if (args.length === 0) {
-        console.error('extends params is undefined')
-        return {};
-    }
-    if (args.length === 1) {
-        return args[0]
-    }
-    //要合并的目标对象
-    var target = args[0];
-    //要合并的内容
-    var sources = args.slice(1, args.length);
+  var args = Array.prototype.slice.call(arguments)
+  if (args.length === 0) {
+    console.error('extends params is undefined')
+    return {}
+  }
+  if (args.length === 1) {
+    return args[0]
+  }
+  //要合并的目标对象
+  var target = args[0]
+  //要合并的内容
+  var sources = args.slice(1, args.length)
 
-    if (!isObject(target) && !isArray(target)) {
-        target = {};
+  if (!isObject(target) && !isArray(target)) {
+    target = {}
+  }
+  sources.map(function(item) {
+    //防止死循环
+    if (target === item) {
+      return false
     }
-    sources.map(function (item) {
-        //防止死循环
-        if (target === item) {
-            return false;
-        }
+    //如果内容是对象
+    if (isObject(item)) {
+      //开始遍历
+      for (var key in item) {
         //如果内容是对象
-        if (isObject(item)) {
-            //开始遍历
-            for (var key in item) {
-                //如果内容是对象
-                if (isObject(item[key])) {
-                    //修正数据
-                    target[key] = (target[key] && isObject(target[key])) ? target[key] : {};
-                    target[key] = extend(target[key], item[key])
-                } else if (isArray(item[key])) {
-                    //修正数据
-                    target[key] = (target[key] && isArray(target[key])) ? target[key] : [];
-                    target[key] = extend(target[key], item[key])
-                } else {
-                    //基本类型直接赋值
-                    target[key] = item[key]
-                }
-            }
-        } else if (isArray(item)) {
-            for (var i = 0; i < item.length; i++) {
-                //如果内容是对象
-                if (isObject(item[i])) {
-                    //修正数据
-                    target[i] = (target[i] && isObject(target[i])) ? target[i] : {}
-                    target[i] = extend(target[i], item[i])
-                } else if (isArray(item[i])) {
-                    //修正数据
-                    target[i] = (target[i] && isArray(target[i])) ? target[i] : [];
-                    target[i] = extend(target[i], item[i])
-                } else {
-                    //基本类型直接赋值
-                    target[i] = item[i]
-                }
-            }
+        if (isObject(item[key])) {
+          //修正数据
+          target[key] = target[key] && isObject(target[key]) ? target[key] : {}
+          target[key] = extend(target[key], item[key])
+        } else if (isArray(item[key])) {
+          //修正数据
+          target[key] = target[key] && isArray(target[key]) ? target[key] : []
+          target[key] = extend(target[key], item[key])
+        } else {
+          //基本类型直接赋值
+          target[key] = item[key]
         }
-        //其他类型直接忽略
-    })
-    return target;
+      }
+    } else if (isArray(item)) {
+      for (var i = 0; i < item.length; i++) {
+        //如果内容是对象
+        if (isObject(item[i])) {
+          //修正数据
+          target[i] = target[i] && isObject(target[i]) ? target[i] : {}
+          target[i] = extend(target[i], item[i])
+        } else if (isArray(item[i])) {
+          //修正数据
+          target[i] = target[i] && isArray(target[i]) ? target[i] : []
+          target[i] = extend(target[i], item[i])
+        } else {
+          //基本类型直接赋值
+          target[i] = item[i]
+        }
+      }
+    }
+    //其他类型直接忽略
+  })
+  return target
 }
 
 /**
@@ -151,22 +149,41 @@ function extend() {
  * @param  {object} to
  * @param  {object} from
  */
-let extend = function (to, from) {
-    for (let property in from) {
-        let descriptor = Object.getOwnPropertyDescriptor(from, property);
+let extend = function(to, from) {
+  for (let property in from) {
+    let descriptor = Object.getOwnPropertyDescriptor(from, property)
 
-        if (descriptor && (!descriptor.writable ||
-                !descriptor.configurable ||
-                !descriptor.enumerable ||
-                descriptor.get ||
-                descriptor.set)) {
-            Object.defineProperty(to, property, descriptor);
-        } else {
-            to[property] = from[property];
-        }
+    if (
+      descriptor &&
+      (!descriptor.writable ||
+        !descriptor.configurable ||
+        !descriptor.enumerable ||
+        descriptor.get ||
+        descriptor.set)
+    ) {
+      Object.defineProperty(to, property, descriptor)
+    } else {
+      to[property] = from[property]
     }
+  }
 }
 
+let Object.assign =
+  Object.assign ||
+  function() {
+    if (arguments.length == 0)
+      throw new TypeError('Cannot convert undefined or null to object')
+
+    let target = arguments[0],
+      args = Array.prototype.slice.call(arguments, 1),
+      key
+    args.forEach(function(item) {
+      for (key in item) {
+        item.hasOwnProperty(key) && (target[key] = item[key])
+      }
+    })
+    return target
+  }
 
 /**
  * @description  shallow clone
@@ -175,13 +192,12 @@ let extend = function (to, from) {
  * @returns  {object} target mix origin
  */
 function shallowClone(target, origin) {
-    let target = target || {};
-    for (let prop in origin) {
-        target[prop] = origin[prop];
-    }
-    return target;
+  let target = target || {}
+  for (let prop in origin) {
+    target[prop] = origin[prop]
+  }
+  return target
 }
-
 
 /**
  * @description  deep clone
@@ -191,26 +207,25 @@ function shallowClone(target, origin) {
  * @returns  {object} target mix origin
  */
 function deepClone1(target, origin) {
-    let target = target || {},
-        toStr = Object.prototype.toString,
-        arrStr = "[object Array]";
-        prop;
-    for (prop in origin) {
-        prop = initalObj[i];// 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
-        if (prop === target) {
-            continue;
-        }
-        if (origin.hasOwnProperty(prop)) {
-            if (origin[prop] != null && typeof (origin[prop]) === "object") {
-                target[prop] = (toStr.call(origin[prop]) === arrStr) ? [] : {};
-                deepClone1(target[prop], origin[prop]);
-            } else {
-                target[prop] = origin[prop];
-            }
-        }
+  let target = target || {},
+    toStr = Object.prototype.toString,
+    arrStr = '[object Array]'
+  prop
+  for (prop in origin) {
+    prop = initalObj[i] // 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
+    if (prop === target) {
+      continue
     }
+    if (origin.hasOwnProperty(prop)) {
+      if (origin[prop] != null && typeof origin[prop] === 'object') {
+        target[prop] = toStr.call(origin[prop]) === arrStr ? [] : {}
+        deepClone1(target[prop], origin[prop])
+      } else {
+        target[prop] = origin[prop]
+      }
+    }
+  }
 }
-
 
 /**
  * @description  deep clone
@@ -220,23 +235,22 @@ function deepClone1(target, origin) {
  * @returns  {object} target mix origin
  */
 function deepClone2(target, origin) {
-    let obj = target || {};
-    for (let i in origin) {
-        let prop = origin[i];// 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
-        if (prop === obj) {
-            continue;
-        }
-        if (origin.hasOwnProperty(prop)) {
-            if (prop != null && typeof prop === 'object') {
-                obj[i] = (prop.constructor === Array) ? [] : Object.create(prop);
-            } else {
-                obj[i] = prop;
-            }
-        }
+  let obj = target || {}
+  for (let i in origin) {
+    let prop = origin[i] // 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
+    if (prop === obj) {
+      continue
     }
-    return obj;
+    if (origin.hasOwnProperty(prop)) {
+      if (prop != null && typeof prop === 'object') {
+        obj[i] = prop.constructor === Array ? [] : Object.create(prop)
+      } else {
+        obj[i] = prop
+      }
+    }
+  }
+  return obj
 }
-
 
 /**
  * @description  json convert
@@ -247,9 +261,8 @@ function deepClone2(target, origin) {
  * @returns  {object} target
  */
 function deepClone3(origin) {
-    return JSON.parse(JSON.stringify(origin));
+  return JSON.parse(JSON.stringify(origin))
 }
-
 
 /**
  * @description  deep clone
@@ -259,39 +272,38 @@ function deepClone3(origin) {
  * @returns  {object} target mix origin
  */
 function deepClone4(values) {
-    let copy;
+  let copy
 
-    // Handle the 3 simple types, and null or undefined
-    if (null == values || "object" != typeof values) return values;
+  // Handle the 3 simple types, and null or undefined
+  if (null == values || 'object' != typeof values) return values
 
-    // Handle Date
-    if (values instanceof Date) {
-        copy = new Date();
-        copy.setTime(values.getTime());
-        return copy;
+  // Handle Date
+  if (values instanceof Date) {
+    copy = new Date()
+    copy.setTime(values.getTime())
+    return copy
+  }
+
+  // Handle Array
+  if (values instanceof Array) {
+    copy = []
+    for (let i = 0, len = values.length; i < len; i++) {
+      copy[i] = deepClone2(values[i])
     }
+    return copy
+  }
 
-    // Handle Array
-    if (values instanceof Array) {
-        copy = [];
-        for (let i = 0, len = values.length; i < len; i++) {
-            copy[i] = deepClone2(values[i]);
-        }
-        return copy;
+  // Handle Object
+  if (values instanceof Object) {
+    copy = {}
+    for (let attr in values) {
+      if (values.hasOwnProperty(attr)) copy[attr] = deepClone2(values[attr])
     }
+    return copy
+  }
 
-    // Handle Object
-    if (values instanceof Object) {
-        copy = {};
-        for (let attr in values) {
-            if (values.hasOwnProperty(attr)) copy[attr] = deepClone2(values[attr]);
-        }
-        return copy;
-    }
-
-    throw new Error("Unable to copy values! Its type isn't supported.");
+  throw new Error("Unable to copy values! Its type isn't supported.")
 }
-
 
 /**
  * @description  ES6---copy object
@@ -300,19 +312,18 @@ function deepClone4(values) {
  * @returns  {object} object mix origin
  */
 function copyObject(origin) {
-    let copy = Object.create(Object.getPrototypeOf(origin));
-    copyOwnPropertiesFrom(copy, origin);
-    return copy;
+  let copy = Object.create(Object.getPrototypeOf(origin))
+  copyOwnPropertiesFrom(copy, origin)
+  return copy
 }
 
 function copyOwnPropertiesFrom(target, source) {
-    Object.getOwnPropertyNames(source).forEach(function (propKey) {
-        let desc = Object.getOwnPropertyDescriptor(source, propKey);
-        Object.defineProperty(target, propKey, desc);
-    });
-    return target;
+  Object.getOwnPropertyNames(source).forEach(function(propKey) {
+    let desc = Object.getOwnPropertyDescriptor(source, propKey)
+    Object.defineProperty(target, propKey, desc)
+  })
+  return target
 }
-
 
 /**
  * @description  inheritedPropertyNames
@@ -321,30 +332,28 @@ function copyOwnPropertiesFrom(target, source) {
  * @returns  {object} object mix origin
  */
 function inheritedPropertyNames(obj) {
-    let props = {};
-    while (obj) {
-        Object.getOwnPropertyNames(obj).forEach(function (p) {
-            props[p] = true;
-        });
-        obj = Object.getPrototypeOf(obj);
-    }
-    return Object.getOwnPropertyNames(props);
+  let props = {}
+  while (obj) {
+    Object.getOwnPropertyNames(obj).forEach(function(p) {
+      props[p] = true
+    })
+    obj = Object.getPrototypeOf(obj)
+  }
+  return Object.getOwnPropertyNames(props)
 }
-
 
 /**
  * @description  圣杯模式
  */
-let inherit = (function () {
-    let F = function () {};
-    return function (Target, Origin) {
-        F.prototype = Origin.prototype;
-        Target.prototype = new F();
-        Target.prototype.constructor = Target;
-        Target.uber = Origin.prototype;
-    }
-}());
-
+let inherit = (function() {
+  let F = function() {}
+  return function(Target, Origin) {
+    F.prototype = Origin.prototype
+    Target.prototype = new F()
+    Target.prototype.constructor = Target
+    Target.uber = Origin.prototype
+  }
+})()
 
 /**
  * @description  simulate new
@@ -357,46 +366,43 @@ let inherit = (function () {
  * @returns {object} new object
  */
 function simulateNew(constructor, params) {
-    let obj = Object.create(constructor.prototype);
-    let result = constructor.call(obj, params);
-    //in case constructor return a simple type
-    return (typeof result === 'object' && result != null) ? result : obj;
+  let obj = Object.create(constructor.prototype)
+  let result = constructor.call(obj, params)
+  //in case constructor return a simple type
+  return typeof result === 'object' && result != null ? result : obj
 }
 //let actor = simulateNew(Person, '张三', 28);
-
 
 /**
  * @description  simulate create
  * @returns {object} new object
  */
 function simulateCreate() {
-    if (typeof Object.create !== "function") {
-        Object.create = function (obj) {
-            function f() {};
-            f.prototype = obj;
-            return new f();
-        };
+  if (typeof Object.create !== 'function') {
+    Object.create = function(obj) {
+      function f() {}
+      f.prototype = obj
+      return new f()
     }
+  }
 }
 //let obj = Object.create(null);
 
-
 //判断对象实例
 function Person(name, age) {
+  //ES3
+  if (!(this instanceof Person)) {
+    return new Person(name, age)
+  }
 
-    //ES3
-    if (!(this instanceof Person)) {
-        return new Person(name, age);
-    }
+  //ES5
+  //let self = this instanceof Person ? this : Object.create(Person.prototype);
 
-    //ES5
-    //let self = this instanceof Person ? this : Object.create(Person.prototype);
+  //ES6
+  // if (!new.target) {
+  //     throw 'Peron must called with new';
+  // }
 
-    //ES6
-    // if (!new.target) {
-    //     throw 'Peron must called with new';
-    // }
-
-    this.name = name;
-    this.age = age;
+  this.name = name
+  this.age = age
 }

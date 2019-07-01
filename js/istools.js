@@ -54,12 +54,37 @@
  * @return {String} 类型字符串
  */
 function type(obj) {
-    let toType = {};
-    let typeArr = ['Undefined', 'Null', 'Boolean', 'Number', 'String', 'Object', 'Array', 'Function', 'Date', 'RegExp', 'Error', 'Arguments', 'Symbol']
-    typeArr.map(function (item, index) {
-        toType["[object " + item + "]"] = item.toLowerCase();
-    })
-    return typeof obj !== "object" ? typeof obj : toType[Object.prototype.toString.call(obj)];
+  let toType = {}
+  let typeArr = [
+    'Undefined',
+    'Null',
+    'Boolean',
+    'Number',
+    'String',
+    'Object',
+    'Array',
+    'Function',
+    'Date',
+    'RegExp',
+    'Error',
+    'Arguments',
+    'Symbol'
+  ]
+  typeArr.map(function(item, index) {
+    toType['[object ' + item + ']'] = item.toLowerCase()
+  })
+  return typeof obj !== 'object'
+    ? typeof obj
+    : toType[Object.prototype.toString.call(obj)]
+}
+
+/**
+ * @desc 获取数据类型
+ * @param value 待检测的数据
+ * @return {Boolean} 布尔值
+ */
+function getRawType(value) {
+  return Object.prototype.toString.call(value).slice(8, -1)
 }
 
 /**
@@ -68,7 +93,7 @@ function type(obj) {
  * @return {Boolean} 布尔值
  */
 function isUndefined(obj) {
-    return obj === void 0;
+  return obj === void 0
 }
 
 /**
@@ -77,7 +102,16 @@ function isUndefined(obj) {
  * @return {Boolean} 布尔值
  */
 function isNull(obj) {
-    return obj === null;
+  return obj === null
+}
+
+/**
+ * @desc 是否是 Date 类型检测
+ * @param value 待检测的数据
+ * @return {Boolean} 布尔值Date
+ */
+function isDate(value) {
+  return Object.prototype.toString.call(value) === '[object Date]'
 }
 
 /**
@@ -86,7 +120,31 @@ function isNull(obj) {
  * @return {Boolean} 布尔值
  */
 function isBoolean(obj) {
-    return typeof(obj) === 'boolean';
+  return typeof obj === 'boolean'
+}
+
+/**
+ * @desc 检测数据是不是除了symbol外的原始数据
+ * @param value 待检测的数据
+ * @return {Boolean} 布尔值
+ */
+function isStatic(value) {
+  return (
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean' ||
+    typeof value === 'undefined' ||
+    value === null
+  )
+}
+
+/**
+ * @desc 检测数据是不是除了symbol外的原始数据
+ * @param value 待检测的数据
+ * @return {Boolean} 布尔值
+ */
+function isPrimitive(value) {
+  return isStatic(value) || typeof value === 'symbol'
 }
 
 /**
@@ -95,7 +153,16 @@ function isBoolean(obj) {
  * @return {boolean} true or false
  */
 function isWindow(obj) {
-    return obj != null && obj === obj.window;
+  return obj != null && obj === obj.window
+}
+
+/**
+ * @description  判断 value 是不是浏览器内置函数
+ * @param  {any} value
+ * @return {boolean} true or false
+ */
+function isNative(value) {
+  return typeof value === 'function' && /native code/.test(value.toString())
 }
 
 /**
@@ -104,10 +171,10 @@ function isWindow(obj) {
  * @return {boolean} true or false
  */
 function isFunction(func) {
-    //below is not cross-browser
-    //return typeof func === "function" || false;
-    //func.toString() maybe is overrided, so use Object.otStinr()
-    return Object.prototype.toString.call(fn) == '[object Function]';
+  //below is not cross-browser
+  //return typeof func === "function" || false;
+  //func.toString() maybe is overrided, so use Object.otStinr()
+  return Object.prototype.toString.call(fn) == '[object Function]'
 }
 
 /**
@@ -116,11 +183,24 @@ function isFunction(func) {
  * @returns {boolean} true or false
  */
 function simulateIsArray(target) {
-    if (Array.isArray) {
-        return Array.isArray(target);
-    } else {
-        return Object.prototype.toString.call(target) === "[object Array]";
-    }
+  if (Array.isArray) {
+    return Array.isArray(target)
+  } else {
+    return Object.prototype.toString.call(target) === '[object Array]'
+  }
+}
+/**
+ * @param {any} value
+ * @description 检查 value 是否为有效的类数组长度
+ * @returns {boolean} true or false
+ */
+function isLength(value) {
+  return (
+    typeof value == 'number' &&
+    value > -1 &&
+    value % 1 == 0 &&
+    value <= Number.MAX_SAFE_INTEGER
+  )
 }
 
 /**
@@ -128,13 +208,15 @@ function simulateIsArray(target) {
  * @description judge if collection is an arrLike
  * @returns {boolean} true or false
  */
-var isArrayLike = function (arrLike) {
-    function getLength(arrLike) {
-        return arrLike == null ? void 0 : arrLike["length"];
-    }
-    var length = getLength(arrLike);
-    return typeof length == 'number' && length >= 0 && length <= Math.pow(2, 53) - 1;
-};
+var isArrayLike = function(arrLike) {
+  function getLength(arrLike) {
+    return arrLike == null ? void 0 : arrLike['length']
+  }
+  var length = getLength(arrLike)
+  return (
+    typeof length == 'number' && length >= 0 && length <= Math.pow(2, 53) - 1
+  )
+}
 
 /**
  * @description check if num is NegZero
@@ -142,8 +224,8 @@ var isArrayLike = function (arrLike) {
  * @returns {boolean} true or false
  */
 function isNegZero(num) {
-    var num = Number(num);
-    return (num === 0) && (1 / num === -Infinity);
+  var num = Number(num)
+  return num === 0 && 1 / num === -Infinity
 }
 
 /**
@@ -152,7 +234,7 @@ function isNegZero(num) {
  * @returns {boolean} true or false
  */
 function isNumeric(num) {
-    return !isNaN(parseFloat(num)) && isFinite(num);
+  return !isNaN(parseFloat(num)) && isFinite(num)
 }
 
 /**
@@ -161,12 +243,12 @@ function isNumeric(num) {
  * @returns {boolean} true or false
  */
 function isInteger(num) {
-    if (Number.isInteger) {
-        return Number.isInteger(num);
-    } else {
-        //return Math.round(x) === x
-        return (typeof num === "number") && num % 1 === 0;
-    }
+  if (Number.isInteger) {
+    return Number.isInteger(num)
+  } else {
+    //return Math.round(x) === x
+    return typeof num === 'number' && num % 1 === 0
+  }
 }
 
 /**
@@ -175,9 +257,9 @@ function isInteger(num) {
  * @returns {boolean} true or false
  */
 function MyIsNaN(value) {
-    // return typeof value === 'number' && isNaN(value);
-    // return Object.is(value, NaN);
-    return value !== value;
+  // return typeof value === 'number' && isNaN(value);
+  // return Object.is(value, NaN);
+  return value !== value
 }
 
 /**
@@ -185,9 +267,11 @@ function MyIsNaN(value) {
  * @returns {boolean} true or false
  */
 function isSupportProto() {
-    return Object.getPrototypeOf({
-        __proto__: null
-    }) === null;
+  return (
+    Object.getPrototypeOf({
+      __proto__: null
+    }) === null
+  )
 }
 
 /**
@@ -196,7 +280,7 @@ function isSupportProto() {
  * @returns {boolean} true or false
  */
 function isJSON(value) {
-    return window.JSON && Object.prototype.toString.call(value) == "[object JSON]";
+  return window.JSON && Object.prototype.toString.call(value) == '[object JSON]'
 }
 
 /**
@@ -207,12 +291,35 @@ function isJSON(value) {
  * @returns {boolean} true or false
  */
 function isObject(obj) {
-    //return Object.prototype.toString.call(obj) === '[object Object]';
-    return obj === Object(obj);
+  //return Object.prototype.toString.call(obj) === '[object Object]';
+  // let type = typeof value;
+  // return value != null && (type == 'object' || type == 'function');
+  return obj === Object(obj)
 }
 //console.log(isObject(new Number(123)));
 //console.log(isObject(123));
 
+/**
+ * @description 如果是null，直接返回true；如果是类数组，判断数据长度；如果是Object对象，判断是否具有属性；如果是其他数据，直接返回false(也可改为返回true)
+ * @param  {object} obj
+ * @return {boolean} true or false
+ */
+function isEmpty(value) {
+  if (value == null) {
+    return true
+  }
+  if (isArrayLike(value)) {
+    return !value.length
+  } else if (isPlainObject(value)) {
+    for (let key in value) {
+      if (hasOwnProperty.call(value, key)) {
+        return false
+      }
+    }
+    return true
+  }
+  return false
+}
 
 /**
  * @description   if obj is a empty object
@@ -220,41 +327,54 @@ function isObject(obj) {
  * @return {boolean} true or false
  */
 function isEmptyObject(obj) {
-    if (!obj || typeof obj !== 'object' || Array.isArray(obj))
-        return false;
-    //for (var name in obj) {
-    //    return false;
-    //}
-    //    return true;
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return false
+  //for (var name in obj) {
+  //    return false;
+  //}
+  //    return true;
 
-    //Object.getOwnPropertyNames(obj).length === 0
-    return !Object.keys(obj).length;
+  //Object.getOwnPropertyNames(obj).length === 0
+  return !Object.keys(obj).length
+}
+
+/**
+ * @description   if obj is a object like
+ * @param  {any} value
+ * @return {boolean} true or false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object'
 }
 
 //json format
 function isPlainObject(obj) {
-    function type(obj) {
-        if (obj == null) {
-            return String(obj);
-        }
-        return typeof obj === "object" || typeof obj === "function" ?
-            class2type[Object.prototype.toString.call(obj)] || "object" :
-            typeof obj;
+  function type(obj) {
+    if (obj == null) {
+      return String(obj)
     }
+    return typeof obj === 'object' || typeof obj === 'function'
+      ? class2type[Object.prototype.toString.call(obj)] || 'object'
+      : typeof obj
+  }
 
-    if (type(obj) !== "object" || obj.nodeType || isWindow(obj)) {
-        return false;
-    }
+  if (type(obj) !== 'object' || obj.nodeType || isWindow(obj)) {
+    return false
+  }
 
-    try {
-        if (obj.constructor &&
-            !Object.prototype.hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf")) {
-            return false;
-        }
-    } catch (e) {
-        return false;
+  try {
+    if (
+      obj.constructor &&
+      !Object.prototype.hasOwnProperty.call(
+        obj.constructor.prototype,
+        'isPrototypeOf'
+      )
+    ) {
+      return false
     }
-    return true;
+  } catch (e) {
+    return false
+  }
+  return true
 }
 
 /**
@@ -263,14 +383,14 @@ function isPlainObject(obj) {
  * @returns {boolean} true or false
  */
 function isPropertySupported(prop) {
-    if (prop in document.body.style) return true;
-    var prefixes = ['Moz', 'Webkit', 'O', 'ms', 'Khtml'];
-    var prefProperty = prop.charAt(0).toUpperCase() + prop.substr(1);
+  if (prop in document.body.style) return true
+  var prefixes = ['Moz', 'Webkit', 'O', 'ms', 'Khtml']
+  var prefProperty = prop.charAt(0).toUpperCase() + prop.substr(1)
 
-    for (var i = 0; i < prefixes.length; i++) {
-        if ((prefixes[i] + prefProperty) in document.body.style) return true;
-    }
-    return false;
+  for (var i = 0; i < prefixes.length; i++) {
+    if (prefixes[i] + prefProperty in document.body.style) return true
+  }
+  return false
 }
 //isPropertySupported('background-clip')
 
@@ -279,5 +399,11 @@ function isPropertySupported(prop) {
  * @return {boolean} true or false
  */
 function isSupportWebP() {
-    return !![].map && document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0;
+  return (
+    !![].map &&
+    document
+      .createElement('canvas')
+      .toDataURL('image/webp')
+      .indexOf('data:image/webp') == 0
+  )
 }
