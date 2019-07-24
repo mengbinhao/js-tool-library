@@ -33,20 +33,26 @@
 
 // let toString=Object.prototype.toString;
 
-// console.log(toString.call(und));       // [object Undefined]
-// console.log(toString.call(nul));       // [object Null]
-// console.log(toString.call(boo));       // [object Boolean]
-// console.log(toString.call(num));       // [object Number]
-// console.log(toString.call(str));       // [object String]
-// console.log(toString.call(obj));       // [object Object]
-// console.log(toString.call(arr));       // [object Array]
-// console.log(toString.call(fun));       // [object Function]
-// console.log(toString.call(date));      // [object Date]
-// console.log(toString.call(reg));       // [object RegExp]
-// console.log(toString.call(err));       // [object Error]
-// console.log(toString.call(arg));       // [object Arguments]
-// console.log(toString.call(document));  // [object HTMLDocument]
-// console.log(toString.call(window));    // [object global] window是全局对象global的引用
+// console.log(toString.call(undefined));      // [object Undefined]
+// console.log(toString.call(null));           // [object Null]
+// console.log(toString.call(true));           // [object Boolean]
+// console.log(toString.call(123));            // [object Number]
+// console.log(toString.call('str'));          // [object String]
+// console.log(toString.call({}));             // [object Object]
+// console.log(toString.call([]));             // [object Array]
+// console.log(toString.call(() => {}));       // [object Function]
+// console.log(toString.call(Symbol()));       // [object Symbol]
+// console.log(toString.call(new Date()));     // [object Date]
+// console.log(toString.call(Math));           // [object Math]
+// console.log(toString.call(reg));            // [object RegExp]
+// console.log(toString.call(err));            // [object Error]
+// console.log(toString.call(arg));            // [object Arguments]
+// console.log(toString.call(document));       // [object HTMLDocument]
+// console.log(toString.call(window));         // [object global] window是全局对象global的引用
+// console.log(toString.call(new Set()));      // [object Set]
+// console.log(toString.call(new WeakSet()));  // [object WeakSet]
+// console.log(toString.call(new WeakMap()));  // [object WeakMap]
+// console.log(toString.call(new Map()));      // [object Map]
 
 /**
  * @desc 数据类型检测
