@@ -415,3 +415,6 @@ Array.prototype.mydistinct = () => {
     obj = null;
     return this;
 }
+
+//无loop生成指定长度的数组
+const List = len => [...new Array(len).keys()]

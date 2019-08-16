@@ -22,6 +22,12 @@ function getBuitlInType(obj) {
   return str.match(/\[object (.*?)\]/)[1].toLowerCase()
 }
 
+const type = data =>
+  Object.prototype.toString
+    .call(data)
+    .replace(/^\[object (.+)\]$/, '$1')
+    .toLowerCase()
+
 /**
  * @description  get builtIn type
  * @param  {object} target
@@ -168,7 +174,7 @@ let extend = function(to, from) {
   }
 }
 
-let Object.assign =
+let assign =
   Object.assign ||
   function() {
     if (arguments.length == 0)
