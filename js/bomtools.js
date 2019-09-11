@@ -201,3 +201,13 @@ document.addEventListener('keydown', function(event) {
     return (event.returnValue = false)
   })
 })
+
+//手机端判断浏览器类型
+const BrowserInfo = {
+  isAndroid: Boolean(navigator.userAgent.match(/android/gi)),
+  isIphone: Boolean(navigator.userAgent.match(/iphone|ipod/gi)),
+  isIpad: Boolean(navigator.userAgent.match(/ipad/gi)),
+  isWeixin: Boolean(navigator.userAgent.match(/MicroMessenger/gi)),
+  isAli: Boolean(navigator.userAgent.match(/AlipayClient/gi)),
+  isPhone: Boolean(/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
+}

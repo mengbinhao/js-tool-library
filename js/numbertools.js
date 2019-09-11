@@ -56,3 +56,8 @@ function getFixedDigitsRandomNumber(n) {
     .toString()
     .slice(-n)
 }
+
+//判断小数是否相等
+function epsEqu(x, y) {
+  return Math.abs(x - y) < Math.pow(2, -53)
+}

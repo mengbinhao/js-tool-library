@@ -266,7 +266,7 @@ function deepClone2(target, origin) {
  * @param  {object} origin
  * @returns  {object} target
  */
-function deepClone3(origin) {
+function simpleDeepClone(origin) {
   return JSON.parse(JSON.stringify(origin))
 }
 
