@@ -24,6 +24,10 @@ const mathIsPrime = n => {
   return true
 }
 
+//生成范围随机数
+const RandomNum = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min
+
 /**
  * @description get random number
  *              do not include max
@@ -61,3 +65,13 @@ function getFixedDigitsRandomNumber(n) {
 function epsEqu(x, y) {
   return Math.abs(x - y) < Math.pow(2, -53)
 }
+
+//补零
+const FillZero = (num, len) => num.toString().padStart(len, '0')
+
+//精确小数
+const RoundNum = (num, decimal) =>
+  Math.round(num * 10 ** decimal) / 10 ** decimal
+
+//判断奇偶
+const OddEven = num => (!!(num & 1) ? 'odd' : 'even')

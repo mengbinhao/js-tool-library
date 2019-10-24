@@ -566,3 +566,32 @@ var ua = parseUA()
 if (!ua.mobile) {
   location.href = './pc.html'
 }
+
+//调试页面元素边界时使用
+var debugBorder = () => {
+  ;[].forEach.call($$('*'), dom => {
+    dom.style.outline =
+      '1px solid #' + (~~(Math.random() * (1 << 24))).toString(16)
+  })
+}
+
+//自适应页面
+function AutoResponse(width = 750) {
+  const target = document.documentElement
+  target.clientWidth >= 600
+    ? (target.style.fontSize = '80px')
+    : (target.style.fontSize = (target.clientWidth / width) * 100 + 'px')
+}
+
+//过滤XSS
+function FilterXss(content) {
+  let elem = document.createElement('div')
+  elem.innerText = content
+  const result = elem.innerHTML
+  elem = null
+  return result
+}
+
+//存取LocalStorage
+const love = JSON.parse(localStorage.getItem('love'))
+localStorage.setItem('love', JSON.stringify('I Love You'))
