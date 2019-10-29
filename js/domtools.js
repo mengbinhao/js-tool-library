@@ -262,6 +262,11 @@ function getStyle(ele, prop) {
     : ele.currentStyle[prop]
 }
 
+function getComputedStyle(el){
+  var computed = document.body.currentStyle ? el.currentStyle : document.defaultView.getComputedStyle(el,'');
+  return computed
+}
+
 /**
  * @description  get all nextSibling ele and all childnodes
  *               recursion invoke
