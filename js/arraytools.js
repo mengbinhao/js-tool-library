@@ -17,7 +17,7 @@ bind(f, o)() // 123     f.bind(o)
  * @returns {array} arr that have been cleared
  */
 function clearArray(arr) {
-  return simulateIsArray(arr) ? (arr.length = 0) : arr
+  return simulateIsArray(arr) ? (arr.length = 0) : arr;
 }
 
 /**
@@ -26,7 +26,7 @@ function clearArray(arr) {
  * @returns {boolean} true or false
  */
 function isEmptyArray(array) {
-  return Array.isArray(arr) && !arr.length
+  return Array.isArray(arr) && !arr.length;
 }
 
 /**
@@ -37,9 +37,9 @@ function isEmptyArray(array) {
  */
 function cutOutArray(arr, newLength) {
   if (!simulateIsArray(arr) || !isInteger(newLength) || newLength < 0) {
-    return arr
+    return arr;
   }
-  arr.length = newLength
+  arr.length = newLength;
 }
 
 /**
@@ -50,9 +50,9 @@ function cutOutArray(arr, newLength) {
 function convertToRealArray(arrLike) {
   if (Array.from) {
     //return [...arrLike];
-    return Array.from(arrLike)
+    return Array.from(arrLike);
   } else {
-    return [].slice.call(arrLike)
+    return [].slice.call(arrLike);
   }
 }
 
@@ -63,12 +63,12 @@ function convertToRealArray(arrLike) {
  * @returns {boolean} true or false
  */
 function isArrayEqual(arr1, arr2) {
-  if (arr1 === arr2) return true
-  if (arr1.length !== arr2.length) return false
+  if (arr1 === arr2) return true;
+  if (arr1.length !== arr2.length) return false;
   for (var i = 1; i < arr1.length; i++) {
-    if (arr1[i] !== arr2[i]) return false
+    if (arr1[i] !== arr2[i]) return false;
   }
-  return true
+  return true;
 }
 
 /**
@@ -78,11 +78,11 @@ function isArrayEqual(arr1, arr2) {
  * @returns {array} arr that have been unioned
  */
 function unionArray(arr1, arr2) {
-  let tempArray = []
+  let tempArray = [];
   for (let i = 0; i < arguments.length; i++) {
-    tempArray.push(...new Set(arguments[i]))
+    tempArray.push(...new Set(arguments[i]));
   }
-  return [...new Set(tempArray)]
+  return [...new Set(tempArray)];
 }
 
 /**
@@ -93,8 +93,8 @@ function unionArray(arr1, arr2) {
  */
 function intersectTwoArray(arr1, arr2) {
   let set1 = new Set(a),
-    set2 = new Set(b)
-  return [...new Set([...set1].filter(x => set2.has(x)))]
+    set2 = new Set(b);
+  return [...new Set([...set1].filter(x => set2.has(x)))];
 }
 
 /**
@@ -105,146 +105,146 @@ function intersectTwoArray(arr1, arr2) {
  */
 function differenceTwoArray(arr1, arr2) {
   let set1 = new Set(a),
-    set2 = new Set(b)
+    set2 = new Set(b);
   return [
     ...new Set([...set1].filter(x => !set2.has(x))),
     ...new Set([...set2].filter(x => !set1.has(x)))
-  ]
+  ];
 }
 
 function unionArrayInclude(a, b) {
-  let tempArr = a.slice()
+  let tempArr = a.slice();
   b.forEach(v => {
-    !tempArr.includes(v) && tempArr.push(v)
-  })
-  return tempArr
+    !tempArr.includes(v) && tempArr.push(v);
+  });
+  return tempArr;
 }
 
 function intersectArrayInclude(a, b) {
-  a.filter(v => b.includes(v))
+  a.filter(v => b.includes(v));
 }
 
 function differenceArrayInclude(a, b) {
-  a.concat(b).filter(v => !a.includes(v) || !b.includes(v))
+  a.concat(b).filter(v => !a.includes(v) || !b.includes(v));
 }
 
 function es5style(arr) {
   return arr.filter(function(elem, index, Array) {
-    return index === Array.indexOf(elem)
-  })
+    return index === Array.indexOf(elem);
+  });
 }
 
 //并集
 //不考虑NAN
 var union = a.concat(
   b.filter(function(v) {
-    return a.indexOf(v) === -1
+    return a.indexOf(v) === -1;
   })
-)
+);
 
 //考虑可以这么写
 var aHasNaN = a.some(function(v) {
-  return isNaN(v)
-})
+  return isNaN(v);
+});
 var bHasNaN = b.some(function(v) {
-  return isNaN(v)
-})
+  return isNaN(v);
+});
 
 var union = a
   .concat(
     b.filter(function(v) {
-      return a.indexOf(v) === -1 && !isNaN(v)
+      return a.indexOf(v) === -1 && !isNaN(v);
     })
   )
-  .concat(!aHasNaN & bHasNaN ? [NaN] : [])
+  .concat(!aHasNaN & bHasNaN ? [NaN] : []);
 
 //交集
-a.filter(v => b.indexOf(v) != -1)
+a.filter(v => b.indexOf(v) != -1);
 
 var aHasNaN = a.some(function(v) {
-  return isNaN(v)
-})
+  return isNaN(v);
+});
 var bHasNaN = b.some(function(v) {
-  return isNaN(v)
-})
+  return isNaN(v);
+});
 a.filter(function(v) {
-  return b.indexOf(v) > -1
-}).concat(aHasNaN & bHasNaN ? [NaN] : [])
+  return b.indexOf(v) > -1;
+}).concat(aHasNaN & bHasNaN ? [NaN] : []);
 
 //差集
-a.concat(b).filter(v => a.indexOf(v) == -1 || b.indexOf(v) == -1)
+a.concat(b).filter(v => a.indexOf(v) == -1 || b.indexOf(v) == -1);
 
 var aHasNaN = a.some(function(v) {
-  return isNaN(v)
-})
+  return isNaN(v);
+});
 var bHasNaN = b.some(function(v) {
-  return isNaN(v)
-})
+  return isNaN(v);
+});
 var difference = a
   .filter(function(v) {
-    return b.indexOf(v) === -1 && !isNaN(v)
+    return b.indexOf(v) === -1 && !isNaN(v);
   })
   .concat(
     b.filter(function(v) {
-      return a.indexOf(v) === -1 && !isNaN(v)
+      return a.indexOf(v) === -1 && !isNaN(v);
     })
   )
-  .concat(aHasNaN ^ bHasNaN ? [NaN] : [])
+  .concat(aHasNaN ^ bHasNaN ? [NaN] : []);
 
 //below is compatibility IE9 and older
 function array_remove_repeat(a) {
   // 去重
-  var r = []
+  var r = [];
   for (var i = 0; i < a.length; i++) {
-    var flag = true
-    var temp = a[i]
+    var flag = true;
+    var temp = a[i];
     for (var j = 0; j < r.length; j++) {
       if (temp === r[j]) {
-        flag = false
-        break
+        flag = false;
+        break;
       }
     }
     if (flag) {
-      r.push(temp)
+      r.push(temp);
     }
   }
-  return r
+  return r;
 }
 
 function array_intersection(a, b) {
   // 交集
-  var result = []
+  var result = [];
   for (var i = 0; i < b.length; i++) {
-    var temp = b[i]
+    var temp = b[i];
     for (var j = 0; j < a.length; j++) {
       if (temp === a[j]) {
-        result.push(temp)
-        break
+        result.push(temp);
+        break;
       }
     }
   }
-  return array_remove_repeat(result)
+  return array_remove_repeat(result);
 }
 
 function array_union(a, b) {
   // 并集
-  return array_remove_repeat(a.concat(b))
+  return array_remove_repeat(a.concat(b));
 }
 
 function array_difference(a, b) {
   // 差集 a - b
   //clone = a
-  var clone = a.slice(0)
+  var clone = a.slice(0);
   for (var i = 0; i < b.length; i++) {
-    var temp = b[i]
+    var temp = b[i];
     for (var j = 0; j < clone.length; j++) {
       if (temp === clone[j]) {
         //remove clone[j]
-        clone.splice(j, 1)
+        clone.splice(j, 1);
       }
     }
   }
-  return array_remove_repeat(clone)
+  return array_remove_repeat(clone);
 }
 
 /**
@@ -254,7 +254,7 @@ function array_difference(a, b) {
  * @returns {array} arr that have been changed
  */
 function arrMergeAndRemoveRepetition(arr) {
-  return Array.from(new Set([].concat.apply([], arguments)))
+  return Array.from(new Set([].concat.apply([], arguments)));
 }
 
 /**
@@ -263,8 +263,9 @@ function arrMergeAndRemoveRepetition(arr) {
  * @returns {number} the max item in array
  */
 function getMaxArrayElement(arr) {
-  //retnrn Math.max(...arr);
-  return Math.max.apply(Math, arr)
+  arr = arr.filter(item => !isNaN(item));
+  //Math.max(...arr);
+  return arr.length ? Math.max.apply(null, arr) : undefined;
 }
 
 //convert empty element to undefined
@@ -276,7 +277,7 @@ function getMaxArrayElement(arr) {
  * @returns {array} arr that have been changed
  */
 function convertEmptyElementInArrayToUndefined(target) {
-  return Array.apply(null, target)
+  return Array.apply(null, target);
 }
 
 /**
@@ -284,7 +285,7 @@ function convertEmptyElementInArrayToUndefined(target) {
  * @returns {array} arr makes up by item type
  */
 function getArgumentsType() {
-  return Array.from(arguments, arg => typeof arg)
+  return Array.from(arguments, arg => typeof arg);
 }
 
 /**
@@ -293,12 +294,12 @@ function getArgumentsType() {
  */
 Array.prototype.simulatePush = function() {
   let len = arguments.length,
-    i
+    i;
   for (i = 0; i < len; i++) {
-    this[this.length] = arguments[i]
+    this[this.length] = arguments[i];
   }
-  return this.length
-}
+  return this.length;
+};
 
 /**
  * @param {array} arr want to be pushed
@@ -306,9 +307,9 @@ Array.prototype.simulatePush = function() {
  * @returns {array} new arr
  */
 Array.prototype.pushArray = function(arr) {
-  this.push(...arr)
-  return this
-}
+  this.push(...arr);
+  return this;
+};
 
 /**
  * @description simulate Array.unshift
@@ -316,12 +317,12 @@ Array.prototype.pushArray = function(arr) {
  * @returns {array} new arr
  */
 Array.prototype.simulateUnshift = function() {
-  var arr = []
+  var arr = [];
   for (var i = 0; i < arguments.length; i++) {
-    arr.push(arguments[i])
+    arr.push(arguments[i]);
   }
-  return arr.concat(this)
-}
+  return arr.concat(this);
+};
 
 /**
  * @param {string} one str need to be counted
@@ -329,7 +330,7 @@ Array.prototype.simulateUnshift = function() {
  * @returns {number} the count
  */
 function countSymbols(str) {
-  return Array.from(str).length
+  return Array.from(str).length;
 }
 
 /**
@@ -341,16 +342,16 @@ Array.prototype.unique = function() {
   var temp = {},
     arr = [],
     len = this.length,
-    i
+    i;
   for (i = 0; i < len; i++) {
     if (!temp[this[i]]) {
       //maybe this[i] value is zero, lead to if condition is true, so use 'abc'
-      temp[this[i]] = 'abc'
-      arr.push(this[i])
+      temp[this[i]] = "abc";
+      arr.push(this[i]);
     }
   }
-  return arr
-}
+  return arr;
+};
 
 /**
  * @description find unique item in one array
@@ -358,8 +359,8 @@ Array.prototype.unique = function() {
  * @returns {array} arr have been filterd
  */
 Array.prototype.uniqueUseSetAndArrayFrom = function() {
-  return Array.from(new Set(this))
-}
+  return Array.from(new Set(this));
+};
 
 /**
  * @description find unique item in one array
@@ -367,8 +368,8 @@ Array.prototype.uniqueUseSetAndArrayFrom = function() {
  * @returns {array} arr have been filterd
  */
 Array.prototype.uniqueSpread = function() {
-  return [...new Set(this)]
-}
+  return [...new Set(this)];
+};
 
 /**
  * @description find longest item in array
@@ -376,9 +377,9 @@ Array.prototype.uniqueSpread = function() {
  */
 Array.prototype.findLongestElementInArray = function() {
   return this.reduce(function(prev, cur) {
-    return cur.length > prev.length ? cur : prev
-  })
-}
+    return cur.length > prev.length ? cur : prev;
+  });
+};
 
 /**
  * @description simulate accumulator
@@ -386,48 +387,116 @@ Array.prototype.findLongestElementInArray = function() {
  */
 Array.prototype.simulateSum = function() {
   return this.reduce(function(prev, cur) {
-    return prev + cur
-  })
-}
+    return prev + cur;
+  });
+};
 
 /**
  * @description simulate accumulator
  * @returns {number} the result
  */
 const myReduce = (f, acc, arr) => {
-  if (arr.length === 0) return acc
-  const [head, ...tail] = arr
-  return reduce(f, f(head, acc), tail)
-}
+  if (arr.length === 0) return acc;
+  const [head, ...tail] = arr;
+  return reduce(f, f(head, acc), tail);
+};
 
 /**
  * @description flatten array
  * @returns {number} the result
  */
 function flatten(arr) {
-  var arr1 = (arr + '').split(',')
+  var arr1 = (arr + "").split(",");
   // var arr2 = arr1.map(function (x) {
   //     return Number(x);
   // });
-  return arr1
+  return arr1;
 }
 
 Array.prototype.mydistinct = () => {
   let obj = {},
-    len = this.length
+    len = this.length;
   for (let i = 0; i < len; i++) {
-    var item = this[i]
-    if (typeof obj[item] !== 'undefined') {
-      this[i] = this[len - 1]
-      this.length--
-      i--
-      continue
+    var item = this[i];
+    if (typeof obj[item] !== "undefined") {
+      this[i] = this[len - 1];
+      this.length--;
+      i--;
+      continue;
     }
-    obj[item] = item
+    obj[item] = item;
   }
-  obj = null
-  return this
-}
+  obj = null;
+  return this;
+};
 
 //无loop生成指定长度的数组
-const List = len => [...new Array(len).keys()]
+const List = len => [...new Array(len).keys()];
+
+//arr.fill：使用 value 值来填充 array，从start位置开始, 到end位置结束（但不包含end位置），返回原数组
+
+Array.prototype.fill =
+  Array.prototype.fill ||
+  function fill(value, start, end) {
+    let ctx = this;
+    let length = ctx.length;
+
+    start = parseInt(start);
+    if (isNaN(start)) {
+      start = 0;
+    } else if (start < 0) {
+      start = -start > length ? 0 : length + start;
+    }
+    end = parseInt(end);
+    if (isNaN(end) || end > length) {
+      end = length;
+    } else if (end < 0) {
+      end += length;
+    }
+
+    while (start < end) {
+      ctx[start++] = value;
+    }
+    return ctx;
+  };
+//Array(3).fill(2) ===> [2, 2, 2]
+
+//arr.includes：用来判断一个数组是否包含一个指定的值，如果是返回 true，否则false，可指定开始查询的位置
+Array.prototype.includes =
+  Array.prototype.includes ||
+  function includes(value, start) {
+    let ctx = this;
+    let length = ctx.length;
+
+    start = parseInt(start);
+    if (isNaN(start)) {
+      start = 0;
+    } else if (start < 0) {
+      start = -start > length ? 0 : length + start;
+    }
+
+    let index = ctx.indexOf(value);
+
+    return index >= start;
+  };
+
+//返回数组中通过测试（函数fn内判断）的第一个元素的值
+Array.prototype.find = Array.prototype.find || function find(fn, ctx){
+  ctx = ctx || this
+  let result;
+  ctx.some((value, index, arr), thisValue) => {
+      return fn(value, index, arr) ? (result = value, true) : false
+  })
+  return result
+}
+
+//返回数组中通过测试（函数fn内判断）的第一个元素的下标
+Array.prototype.findIndex = Array.prototype.findIndex || function findIndex(fn, ctx){
+  ctx = ctx || this
+
+  let result;
+  ctx.some((value, index, arr), thisValue) => {
+      return fn(value, index, arr) ? (result = index, true) : false
+  })
+  return result
+}

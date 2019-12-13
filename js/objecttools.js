@@ -18,32 +18,32 @@
  * @returns {string} the builtIn type
  */
 function getBuitlInType(obj) {
-  let str = Object.prototype.toString.call(obj)
-  return str.match(/\[object (.*?)\]/)[1].toLowerCase()
+  let str = Object.prototype.toString.call(obj);
+  return str.match(/\[object (.*?)\]/)[1].toLowerCase();
 }
 
 const type = data =>
   Object.prototype.toString
     .call(data)
-    .replace(/^\[object (.+)\]$/, '$1')
-    .toLowerCase()
+    .replace(/^\[object (.+)\]$/, "$1")
+    .toLowerCase();
 
 function DataType(tgt, type) {
   const dataType = Object.prototype.toString
     .call(tgt)
-    .replace(/\[object /g, '')
-    .replace(/\]/g, '')
-    .toLowerCase()
-  return type ? dataType === type : dataType
+    .replace(/\[object /g, "")
+    .replace(/\]/g, "")
+    .toLowerCase();
+  return type ? dataType === type : dataType;
 }
-DataType('young') // "string"
-DataType(20190214) // "number"
-DataType(true) // "boolean"
-DataType([], 'array') // true
-DataType({}, 'array') // false
+DataType("young"); // "string"
+DataType(20190214); // "number"
+DataType(true); // "boolean"
+DataType([], "array"); // true
+DataType({}, "array"); // false
 
 function isEmptyObj(obj) {
-  return DataType(obj, 'object') && !Object.keys(obj).length
+  return DataType(obj, "object") && !Object.keys(obj).length;
 }
 /**
  * @description  get builtIn type
@@ -51,24 +51,24 @@ function isEmptyObj(obj) {
  * @returns {string} the builtIn type
  */
 function getBuitlInType2(target) {
-  let ret = typeof target
+  let ret = typeof target;
   let template = {
-    '[object Array]': 'Array',
-    '[object Object]': 'Object',
-    '[object Number]': 'number - object',
-    '[object Boolean]': 'boolean - object',
-    '[object String]': 'string - object',
-    '[object RegExp]': 'RegExp',
-    '[object Date]': 'Date',
-    '[object Error]': 'Error'
-  }
+    "[object Array]": "Array",
+    "[object Object]": "Object",
+    "[object Number]": "number - object",
+    "[object Boolean]": "boolean - object",
+    "[object String]": "string - object",
+    "[object RegExp]": "RegExp",
+    "[object Date]": "Date",
+    "[object Error]": "Error"
+  };
   if (target == null) {
-    return null
-  } else if (ret == 'object') {
-    let str = Object.prototype.toString.call(target)
-    return template[str]
+    return null;
+  } else if (ret == "object") {
+    let str = Object.prototype.toString.call(target);
+    return template[str];
   } else {
-    return ret
+    return ret;
   }
 }
 
@@ -80,9 +80,9 @@ function getBuitlInType2(target) {
  */
 function getDefiningObject(obj, prop) {
   while (obj && !{}.hasOwnProperty.call(obj, prop)) {
-    obj = Object.getPrototypeOf(obj)
+    obj = Object.getPrototypeOf(obj);
   }
-  return obj
+  return obj;
 }
 
 /**
@@ -92,7 +92,7 @@ function getDefiningObject(obj, prop) {
  * @returns {boolean} true or false
  */
 function hasProp(obj, prop) {
-  return obj != null && Object.prototype.hasOwnProperty.call(obj, prop)
+  return obj != null && Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
 /*
@@ -106,26 +106,26 @@ function hasProp(obj, prop) {
     使用  extend(target, ...source)
  */
 function extend() {
-  var args = Array.prototype.slice.call(arguments)
+  var args = Array.prototype.slice.call(arguments);
   if (args.length === 0) {
-    console.error('extends params is undefined')
-    return {}
+    console.error("extends params is undefined");
+    return {};
   }
   if (args.length === 1) {
-    return args[0]
+    return args[0];
   }
   //要合并的目标对象
-  var target = args[0]
+  var target = args[0];
   //要合并的内容
-  var sources = args.slice(1, args.length)
+  var sources = args.slice(1, args.length);
 
   if (!isObject(target) && !isArray(target)) {
-    target = {}
+    target = {};
   }
   sources.map(function(item) {
     //防止死循环
     if (target === item) {
-      return false
+      return false;
     }
     //如果内容是对象
     if (isObject(item)) {
@@ -134,15 +134,15 @@ function extend() {
         //如果内容是对象
         if (isObject(item[key])) {
           //修正数据
-          target[key] = target[key] && isObject(target[key]) ? target[key] : {}
-          target[key] = extend(target[key], item[key])
+          target[key] = target[key] && isObject(target[key]) ? target[key] : {};
+          target[key] = extend(target[key], item[key]);
         } else if (isArray(item[key])) {
           //修正数据
-          target[key] = target[key] && isArray(target[key]) ? target[key] : []
-          target[key] = extend(target[key], item[key])
+          target[key] = target[key] && isArray(target[key]) ? target[key] : [];
+          target[key] = extend(target[key], item[key]);
         } else {
           //基本类型直接赋值
-          target[key] = item[key]
+          target[key] = item[key];
         }
       }
     } else if (isArray(item)) {
@@ -150,21 +150,21 @@ function extend() {
         //如果内容是对象
         if (isObject(item[i])) {
           //修正数据
-          target[i] = target[i] && isObject(target[i]) ? target[i] : {}
-          target[i] = extend(target[i], item[i])
+          target[i] = target[i] && isObject(target[i]) ? target[i] : {};
+          target[i] = extend(target[i], item[i]);
         } else if (isArray(item[i])) {
           //修正数据
-          target[i] = target[i] && isArray(target[i]) ? target[i] : []
-          target[i] = extend(target[i], item[i])
+          target[i] = target[i] && isArray(target[i]) ? target[i] : [];
+          target[i] = extend(target[i], item[i]);
         } else {
           //基本类型直接赋值
-          target[i] = item[i]
+          target[i] = item[i];
         }
       }
     }
     //其他类型直接忽略
-  })
-  return target
+  });
+  return target;
 }
 
 /**
@@ -174,7 +174,7 @@ function extend() {
  */
 let extend = function(to, from) {
   for (let property in from) {
-    let descriptor = Object.getOwnPropertyDescriptor(from, property)
+    let descriptor = Object.getOwnPropertyDescriptor(from, property);
 
     if (
       descriptor &&
@@ -184,29 +184,29 @@ let extend = function(to, from) {
         descriptor.get ||
         descriptor.set)
     ) {
-      Object.defineProperty(to, property, descriptor)
+      Object.defineProperty(to, property, descriptor);
     } else {
-      to[property] = from[property]
+      to[property] = from[property];
     }
   }
-}
+};
 
 let assign =
   Object.assign ||
   function() {
     if (arguments.length == 0)
-      throw new TypeError('Cannot convert undefined or null to object')
+      throw new TypeError("Cannot convert undefined or null to object");
 
     let target = arguments[0],
       args = Array.prototype.slice.call(arguments, 1),
-      key
+      key;
     args.forEach(function(item) {
       for (key in item) {
-        item.hasOwnProperty(key) && (target[key] = item[key])
+        item.hasOwnProperty(key) && (target[key] = item[key]);
       }
-    })
-    return target
-  }
+    });
+    return target;
+  };
 
 /**
  * @description  shallow clone
@@ -215,11 +215,11 @@ let assign =
  * @returns  {object} target mix origin
  */
 function shallowClone(target, origin) {
-  let target = target || {}
+  let target = target || {};
   for (let prop in origin) {
-    target[prop] = origin[prop]
+    target[prop] = origin[prop];
   }
-  return target
+  return target;
 }
 
 /**
@@ -232,19 +232,19 @@ function shallowClone(target, origin) {
 function deepClone1(target, origin) {
   let target = target || {},
     toStr = Object.prototype.toString,
-    arrStr = '[object Array]'
-  prop
+    arrStr = "[object Array]";
+  prop;
   for (prop in origin) {
-    prop = initalObj[i] // 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
+    prop = initalObj[i]; // 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
     if (prop === target) {
-      continue
+      continue;
     }
     if (origin.hasOwnProperty(prop)) {
-      if (origin[prop] != null && typeof origin[prop] === 'object') {
-        target[prop] = toStr.call(origin[prop]) === arrStr ? [] : {}
-        deepClone1(target[prop], origin[prop])
+      if (origin[prop] != null && typeof origin[prop] === "object") {
+        target[prop] = toStr.call(origin[prop]) === arrStr ? [] : {};
+        deepClone1(target[prop], origin[prop]);
       } else {
-        target[prop] = origin[prop]
+        target[prop] = origin[prop];
       }
     }
   }
@@ -258,21 +258,21 @@ function deepClone1(target, origin) {
  * @returns  {object} target mix origin
  */
 function deepClone2(target, origin) {
-  let obj = target || {}
+  let obj = target || {};
   for (let i in origin) {
-    let prop = origin[i] // 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
+    let prop = origin[i]; // 避免相互引用对象导致死循环，如initalObj.a = initalObj的情况
     if (prop === obj) {
-      continue
+      continue;
     }
     if (origin.hasOwnProperty(prop)) {
-      if (prop != null && typeof prop === 'object') {
-        obj[i] = prop.constructor === Array ? [] : Object.create(prop)
+      if (prop != null && typeof prop === "object") {
+        obj[i] = prop.constructor === Array ? [] : Object.create(prop);
       } else {
-        obj[i] = prop
+        obj[i] = prop;
       }
     }
   }
-  return obj
+  return obj;
 }
 
 /**
@@ -284,7 +284,7 @@ function deepClone2(target, origin) {
  * @returns  {object} target
  */
 function simpleDeepClone(origin) {
-  return JSON.parse(JSON.stringify(origin))
+  return JSON.parse(JSON.stringify(origin));
 }
 
 /**
@@ -295,37 +295,37 @@ function simpleDeepClone(origin) {
  * @returns  {object} target mix origin
  */
 function deepClone4(values) {
-  let copy
+  let copy;
 
   // Handle the 3 simple types, and null or undefined
-  if (null == values || 'object' != typeof values) return values
+  if (null == values || "object" != typeof values) return values;
 
   // Handle Date
   if (values instanceof Date) {
-    copy = new Date()
-    copy.setTime(values.getTime())
-    return copy
+    copy = new Date();
+    copy.setTime(values.getTime());
+    return copy;
   }
 
   // Handle Array
   if (values instanceof Array) {
-    copy = []
+    copy = [];
     for (let i = 0, len = values.length; i < len; i++) {
-      copy[i] = deepClone2(values[i])
+      copy[i] = deepClone2(values[i]);
     }
-    return copy
+    return copy;
   }
 
   // Handle Object
   if (values instanceof Object) {
-    copy = {}
+    copy = {};
     for (let attr in values) {
-      if (values.hasOwnProperty(attr)) copy[attr] = deepClone2(values[attr])
+      if (values.hasOwnProperty(attr)) copy[attr] = deepClone2(values[attr]);
     }
-    return copy
+    return copy;
   }
 
-  throw new Error("Unable to copy values! Its type isn't supported.")
+  throw new Error("Unable to copy values! Its type isn't supported.");
 }
 
 /**
@@ -335,17 +335,17 @@ function deepClone4(values) {
  * @returns  {object} object mix origin
  */
 function copyObject(origin) {
-  let copy = Object.create(Object.getPrototypeOf(origin))
-  copyOwnPropertiesFrom(copy, origin)
-  return copy
+  let copy = Object.create(Object.getPrototypeOf(origin));
+  copyOwnPropertiesFrom(copy, origin);
+  return copy;
 }
 
 function copyOwnPropertiesFrom(target, source) {
   Object.getOwnPropertyNames(source).forEach(function(propKey) {
-    let desc = Object.getOwnPropertyDescriptor(source, propKey)
-    Object.defineProperty(target, propKey, desc)
-  })
-  return target
+    let desc = Object.getOwnPropertyDescriptor(source, propKey);
+    Object.defineProperty(target, propKey, desc);
+  });
+  return target;
 }
 
 /**
@@ -355,28 +355,28 @@ function copyOwnPropertiesFrom(target, source) {
  * @returns  {object} object mix origin
  */
 function inheritedPropertyNames(obj) {
-  let props = {}
+  let props = {};
   while (obj) {
     Object.getOwnPropertyNames(obj).forEach(function(p) {
-      props[p] = true
-    })
-    obj = Object.getPrototypeOf(obj)
+      props[p] = true;
+    });
+    obj = Object.getPrototypeOf(obj);
   }
-  return Object.getOwnPropertyNames(props)
+  return Object.getOwnPropertyNames(props);
 }
 
 /**
  * @description  圣杯模式
  */
 let inherit = (function() {
-  let F = function() {}
+  let F = function() {};
   return function(Target, Origin) {
-    F.prototype = Origin.prototype
-    Target.prototype = new F()
-    Target.prototype.constructor = Target
-    Target.uber = Origin.prototype
-  }
-})()
+    F.prototype = Origin.prototype;
+    Target.prototype = new F();
+    Target.prototype.constructor = Target;
+    Target.uber = Origin.prototype;
+  };
+})();
 
 /**
  * @description  simulate new
@@ -389,10 +389,10 @@ let inherit = (function() {
  * @returns {object} new object
  */
 function simulateNew(constructor, params) {
-  let obj = Object.create(constructor.prototype)
-  let result = constructor.call(obj, params)
+  let obj = Object.create(constructor.prototype);
+  let result = constructor.call(obj, params);
   //in case constructor return a simple type
-  return typeof result === 'object' && result != null ? result : obj
+  return typeof result === "object" && result != null ? result : obj;
 }
 //let actor = simulateNew(Person, '张三', 28);
 
@@ -401,12 +401,12 @@ function simulateNew(constructor, params) {
  * @returns {object} new object
  */
 function simulateCreate() {
-  if (typeof Object.create !== 'function') {
+  if (typeof Object.create !== "function") {
     Object.create = function(obj) {
       function f() {}
-      f.prototype = obj
-      return new f()
-    }
+      f.prototype = obj;
+      return new f();
+    };
   }
 }
 //let obj = Object.create(null);
@@ -415,7 +415,7 @@ function simulateCreate() {
 function Person(name, age) {
   //ES3
   if (!(this instanceof Person)) {
-    return new Person(name, age)
+    return new Person(name, age);
   }
 
   //ES5
@@ -426,6 +426,66 @@ function Person(name, age) {
   //     throw 'Peron must called with new';
   // }
 
-  this.name = name
-  this.age = age
+  this.name = name;
+  this.age = age;
 }
+
+//getPropByPath：根据字符串路径获取对象属性 : 'obj[0].count'
+function getPropByPath(obj, path, strict) {
+  let tempObj = obj;
+  path = path.replace(/[(w+)]/g, ".$1"); //将[0]转化为.0
+  path = path.replace(/^./, ""); //去除开头的.
+
+  let keyArr = path.split("."); //根据.切割
+  let i = 0;
+  for (let len = keyArr.length; i < len - 1; ++i) {
+    if (!tempObj && !strict) break;
+    let key = keyArr[i];
+    if (key in tempObj) {
+      tempObj = tempObj[key];
+    } else {
+      if (strict) {
+        //开启严格模式，没找到对应key值，抛出错误
+        throw new Error("please transfer a valid prop path to form item!");
+      }
+      break;
+    }
+  }
+  return {
+    o: tempObj, //原始数据
+    k: keyArr[i], //key值
+    v: tempObj ? tempObj[keyArr[i]] : null // key值对应的值
+  };
+}
+
+//返回一个由一个给定对象的自身可枚举属性组成的数组
+Object.keys =
+  Object.keys ||
+  function keys(object) {
+    if (object === null || object === undefined) {
+      throw new TypeError("Cannot convert undefined or null to object");
+    }
+    let result = [];
+    if (isArrayLike(object) || isPlainObject(object)) {
+      for (let key in object) {
+        object.hasOwnProperty(key) && result.push(key);
+      }
+    }
+    return result;
+  };
+
+//返回一个给定对象自身的所有可枚举属性值的数组
+Object.values =
+  Object.values ||
+  function values(object) {
+    if (object === null || object === undefined) {
+      throw new TypeError("Cannot convert undefined or null to object");
+    }
+    let result = [];
+    if (isArrayLike(object) || isPlainObject(object)) {
+      for (let key in object) {
+        object.hasOwnProperty(key) && result.push(object[key]);
+      }
+    }
+    return result;
+  };

@@ -4,30 +4,32 @@
  * @returns {number} result
  */
 function toInteger(num) {
-  var val = Number(num)
-  return val > 0 ? val.floor(val) : val.ceil(val)
+  var val = Number(num);
+  return val > 0 ? val.floor(val) : val.ceil(val);
 }
 
 //判断是否为质数
 const mathIsPrime = n => {
   if (n === 2 || n === 3) {
-    return true
+    return true;
   }
   if (isNaN(n) || n <= 1 || n % 1 != 0 || n % 2 == 0 || n % 3 == 0) {
-    return false
+    return false;
   }
   for (let x = 6; x <= Math.sqrt(n) + 1; x += 6) {
     if (n % (x - 1) == 0 || n % (x + 1) == 0) {
-      return false
+      return false;
     }
   }
-  return true
-}
+  return true;
+};
 
 //生成范围随机数
-const RandomNum = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1)) + min
-
+const RandomNum = (min, max) => {
+  lower = +lower || 0;
+  upper = +upper || 0;
+  Math.floor(Math.random() * (max - min + 1)) + min;
+};
 /**
  * @description get random number
  *              do not include max
@@ -36,7 +38,9 @@ const RandomNum = (min, max) =>
  * @returns {number} random number
  */
 function getRandomNumber(min, max, isContainsMax) {
-  return Math.floor(Math.random() * (max - min + (isContainsMax ? 1 : 0)) + min)
+  return Math.floor(
+    Math.random() * (max - min + (isContainsMax ? 1 : 0)) + min
+  );
 }
 //console.log(getRandomNumber(1, 10, true))
 
@@ -49,29 +53,29 @@ function getRandomNumber(min, max, isContainsMax) {
 function getFixedDigitsRandomNumber(n) {
   if (
     !n ||
-    typeof n !== 'number' ||
+    typeof n !== "number" ||
     n < 0 ||
-    n > (Number.MAX_SAFE_INTEGER + '').length
+    n > (Number.MAX_SAFE_INTEGER + "").length
   )
-    return
+    return;
   //return Math.random().toFixed(6).slice(-6);
   //return '' + Math.floor(Math.random() * 999999);
   return Math.random()
     .toString()
-    .slice(-n)
+    .slice(-n);
 }
 
 //判断小数是否相等
 function epsEqu(x, y) {
-  return Math.abs(x - y) < Math.pow(2, -53)
+  return Math.abs(x - y) < Math.pow(2, -53);
 }
 
 //补零
-const FillZero = (num, len) => num.toString().padStart(len, '0')
+const FillZero = (num, len) => num.toString().padStart(len, "0");
 
 //精确小数
 const RoundNum = (num, decimal) =>
-  Math.round(num * 10 ** decimal) / 10 ** decimal
+  Math.round(num * 10 ** decimal) / 10 ** decimal;
 
 //判断奇偶
-const OddEven = num => (!!(num & 1) ? 'odd' : 'even')
+const OddEven = num => (!!(num & 1) ? "odd" : "even");

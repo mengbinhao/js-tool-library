@@ -4,10 +4,10 @@
  * @return {json}
  */
 function parseQueryString(url) {
-  var url = url == null ? window.location.href : url
-  var search = url.substring(url.lastIndexOf('?') + 1)
+  var url = url == null ? window.location.href : url;
+  var search = url.substring(url.lastIndexOf("?") + 1);
   if (!search) {
-    return {}
+    return {};
   }
   return JSON.parse(
     '{"' +
@@ -16,7 +16,7 @@ function parseQueryString(url) {
         .replace(/&/g, '","')
         .replace(/=/g, '":"') +
       '"}'
-  )
+  );
 }
 
 /**
@@ -25,17 +25,17 @@ function parseQueryString(url) {
  * @return {object}
  */
 function queryURLParamater(url) {
-  var obj = {}
-  if (url.lastIndexOf('?') == -1) {
-    return obj
+  var obj = {};
+  if (url.lastIndexOf("?") == -1) {
+    return obj;
   }
 
-  var arr = url.split('?')[1].split('&')
+  var arr = url.split("?")[1].split("&");
   for (let i = 0; i < arr.length; i++) {
-    var temp = arr[i].split('=')
-    obj[temp[0]] = temp[1]
+    var temp = arr[i].split("=");
+    obj[temp[0]] = temp[1];
   }
-  return obj
+  return obj;
 }
 
 /**
@@ -44,12 +44,12 @@ function queryURLParamater(url) {
  * @return {object}
  */
 function queryURLParamaterByRegex(url) {
-  let obj = {}
-  let reg = /([^?=&]+)=([^?=&]+)/g
+  let obj = {};
+  let reg = /([^?=&]+)=([^?=&]+)/g;
   url.replace(reg, (...arg) => {
-    obj[arg[1]] = arg[2]
-  })
-  return obj
+    obj[arg[1]] = arg[2];
+  });
+  return obj;
 }
 
 /**
@@ -59,24 +59,24 @@ function queryURLParamaterByRegex(url) {
  * @return {string}
  */
 function stringfyQueryString(obj) {
-  if (!obj) return ''
-  var pairs = []
+  if (!obj) return "";
+  var pairs = [];
 
   for (var key in obj) {
-    var value = obj[key]
+    var value = obj[key];
     if (value instanceof Array) {
       for (var i = 0; i < value.length; ++i) {
         pairs.push(
-          encodeURIComponent(key + '[' + i + ']') +
-            '=' +
+          encodeURIComponent(key + "[" + i + "]") +
+            "=" +
             encodeURIComponent(value[i])
-        )
+        );
       }
-      continue
+      continue;
     }
-    pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]))
+    pairs.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
   }
-  return pairs.join('&')
+  return pairs.join("&");
 }
 
 /**
@@ -87,10 +87,10 @@ function stringfyQueryString(obj) {
  * @returns url with new param
  */
 function addURLParam(url, name, value) {
-  url += url.indexOf('?') == -1 ? '?' : '&'
-  url += encodeURIComponent(name) + '=' + encodeURIComponent(value)
-  return url
+  url += url.indexOf("?") == -1 ? "?" : "&";
+  url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+  return url;
 }
 
-let urlParams = new URLSearchParams('?post=1234&action=edit')
-console.log(urlParams.get('action')) // "edit"
+let urlParams = new URLSearchParams("?post=1234&action=edit");
+console.log(urlParams.get("action")); // "edit"

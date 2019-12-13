@@ -1,75 +1,75 @@
 //运行环境是浏览器
-let inBrowser = typeof window !== 'undefined'
+let inBrowser = typeof window !== "undefined";
 //运行环境是微信
-let inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform
-let weexPlatform = inWeex && WXEnvironment.platform.toLowerCase()
+let inWeex = typeof WXEnvironment !== "undefined" && !!WXEnvironment.platform;
+let weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
 //浏览器 UA 判断
-let UA = inBrowser && window.navigator.userAgent.toLowerCase()
-let isIE = UA && /msie|trident/.test(UA)
-let isIE9 = UA && UA.indexOf('msie 9.0') > 0
-let isEdge = UA && UA.indexOf('edge/') > 0
-let isAndroid = (UA && UA.indexOf('android') > 0) || weexPlatform === 'android'
-let isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || weexPlatform === 'ios'
-let isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge
+let UA = inBrowser && window.navigator.userAgent.toLowerCase();
+let isIE = UA && /msie|trident/.test(UA);
+let isIE9 = UA && UA.indexOf("msie 9.0") > 0;
+let isEdge = UA && UA.indexOf("edge/") > 0;
+let isAndroid = (UA && UA.indexOf("android") > 0) || weexPlatform === "android";
+let isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || weexPlatform === "ios";
+let isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
 
 //获取浏览器信息
 function getExplorerInfo() {
-  let t = navigator.userAgent.toLowerCase()
-  return 0 <= t.indexOf('msie')
+  let t = navigator.userAgent.toLowerCase();
+  return 0 <= t.indexOf("msie")
     ? {
         //ie < 11
-        type: 'IE',
+        type: "IE",
         version: Number(t.match(/msie ([\d]+)/)[1])
       }
     : !!t.match(/trident\/.+?rv:(([\d.]+))/)
     ? {
         // ie 11
-        type: 'IE',
+        type: "IE",
         version: 11
       }
-    : 0 <= t.indexOf('edge')
+    : 0 <= t.indexOf("edge")
     ? {
-        type: 'Edge',
+        type: "Edge",
         version: Number(t.match(/edge\/([\d]+)/)[1])
       }
-    : 0 <= t.indexOf('firefox')
+    : 0 <= t.indexOf("firefox")
     ? {
-        type: 'Firefox',
+        type: "Firefox",
         version: Number(t.match(/firefox\/([\d]+)/)[1])
       }
-    : 0 <= t.indexOf('chrome')
+    : 0 <= t.indexOf("chrome")
     ? {
-        type: 'Chrome',
+        type: "Chrome",
         version: Number(t.match(/chrome\/([\d]+)/)[1])
       }
-    : 0 <= t.indexOf('opera')
+    : 0 <= t.indexOf("opera")
     ? {
-        type: 'Opera',
+        type: "Opera",
         version: Number(t.match(/opera.([\d]+)/)[1])
       }
-    : 0 <= t.indexOf('Safari')
+    : 0 <= t.indexOf("Safari")
     ? {
-        type: 'Safari',
+        type: "Safari",
         version: Number(t.match(/version\/([\d]+)/)[1])
       }
     : {
         type: t,
         version: -1
-      }
+      };
 }
 
 //检测是否为PC端浏览器模式
 function isPCBroswer() {
   let e = navigator.userAgent.toLowerCase(),
-    t = 'ipad' == e.match(/ipad/i),
-    i = 'iphone' == e.match(/iphone/i),
-    r = 'midp' == e.match(/midp/i),
-    n = 'rv:1.2.3.4' == e.match(/rv:1.2.3.4/i),
-    a = 'ucweb' == e.match(/ucweb/i),
-    o = 'android' == e.match(/android/i),
-    s = 'windows ce' == e.match(/windows ce/i),
-    l = 'windows mobile' == e.match(/windows mobile/i)
-  return !(t || i || r || n || a || o || s || l)
+    t = "ipad" == e.match(/ipad/i),
+    i = "iphone" == e.match(/iphone/i),
+    r = "midp" == e.match(/midp/i),
+    n = "rv:1.2.3.4" == e.match(/rv:1.2.3.4/i),
+    a = "ucweb" == e.match(/ucweb/i),
+    o = "android" == e.match(/android/i),
+    s = "windows ce" == e.match(/windows ce/i),
+    l = "windows mobile" == e.match(/windows mobile/i);
+  return !(t || i || r || n || a || o || s || l);
 }
 /**
  * @description get browser type and version
@@ -78,8 +78,8 @@ function isPCBroswer() {
 function getBrowser() {
   var sys = {},
     ua = navigator.userAgent.toLowerCase(),
-    s
-  ;(s = ua.match(/rv:([\d.]+)\) like gecko/))
+    s;
+  (s = ua.match(/rv:([\d.]+)\) like gecko/))
     ? (sys.ie = s[1])
     : (s = ua.match(/msie ([\d\.]+)/))
     ? (sys.ie = s[1])
@@ -93,16 +93,16 @@ function getBrowser() {
     ? (sys.chrome = s[1])
     : (s = ua.match(/version\/([\d\.]+).*safari/))
     ? (sys.safari = s[1])
-    : 0
+    : 0;
 
-  if (sys.ie) return 'IE: ' + sys.ie
-  if (sys.edge) return 'EDGE: ' + sys.edge
-  if (sys.firefox) return 'Firefox: ' + sys.firefox
-  if (sys.chrome) return 'Chrome: ' + sys.chrome
-  if (sys.opera) return 'Opera: ' + sys.opera
-  if (sys.safari) return 'Safari: ' + sys.safari
+  if (sys.ie) return "IE: " + sys.ie;
+  if (sys.edge) return "EDGE: " + sys.edge;
+  if (sys.firefox) return "Firefox: " + sys.firefox;
+  if (sys.chrome) return "Chrome: " + sys.chrome;
+  if (sys.opera) return "Opera: " + sys.opera;
+  if (sys.safari) return "Safari: " + sys.safari;
 
-  return 'Unkonwn'
+  return "Unkonwn";
 }
 
 /**
@@ -110,11 +110,11 @@ function getBrowser() {
  * @return {boolean} true or false
  */
 function isSupportSVG() {
-  var SVG_NS = 'http://www.w3.org/2000/svg'
+  var SVG_NS = "http://www.w3.org/2000/svg";
   return (
     !!document.createElementNS &&
-    !!document.createElementNS(SVG_NS, 'svg').createSVGRect
-  )
+    !!document.createElementNS(SVG_NS, "svg").createSVGRect
+  );
 }
 
 /**
@@ -122,15 +122,15 @@ function isSupportSVG() {
  * @return {boolean} true or false
  */
 function isSupportCanvas() {
-  if (document.createElement('canvas').getContext) {
-    return true
+  if (document.createElement("canvas").getContext) {
+    return true;
   } else {
-    return false
+    return false;
   }
 }
 
 function toFullScreen() {
-  let elem = document.body
+  let elem = document.body;
   elem.webkitRequestFullScreen
     ? elem.webkitRequestFullScreen()
     : elem.mozRequestFullScreen
@@ -139,11 +139,11 @@ function toFullScreen() {
     ? elem.msRequestFullscreen()
     : elem.requestFullScreen
     ? elem.requestFullScreen()
-    : console.log('浏览器不支持全屏')
+    : console.log("浏览器不支持全屏");
 }
 
 function exitFullscreen() {
-  let elem = parent.document
+  let elem = parent.document;
   elem.webkitCancelFullScreen
     ? elem.webkitCancelFullScreen()
     : elem.mozCancelFullScreen
@@ -154,7 +154,7 @@ function exitFullscreen() {
     ? elem.msExitFullscreen()
     : elem.exitFullscreen
     ? elem.exitFullscreen()
-    : alert('切换失败,可尝试Esc退出')
+    : alert("切换失败,可尝试Esc退出");
 }
 
 window.requestAnimationFrame =
@@ -165,8 +165,8 @@ window.requestAnimationFrame =
   window.oRequestAnimationFrame ||
   function(callback) {
     //为了使setTimteout的尽可能的接近每秒60帧的效果
-    window.setTimeout(callback, 1000 / 60)
-  }
+    window.setTimeout(callback, 1000 / 60);
+  };
 
 window.cancelAnimationFrame =
   window.cancelAnimationFrame ||
@@ -176,11 +176,11 @@ window.cancelAnimationFrame =
   window.oCancelAnimationFrame ||
   function(id) {
     //为了使setTimteout的尽可能的接近每秒60帧的效果
-    window.clearTimeout(id)
-  }
+    window.clearTimeout(id);
+  };
 
 //禁止某些键盘事件
-document.addEventListener('keydown', function(event) {
+document.addEventListener("keydown", function(event) {
   return (
     !(
       112 == event.keyCode || //F1
@@ -189,18 +189,17 @@ document.addEventListener('keydown', function(event) {
       (event.ctrlKey && 78 == event.keyCode) || //ctrl + N
       (event.shiftKey && 121 == event.keyCode) || //shift + F10
       (event.altKey && 115 == event.keyCode) || //alt + F4
-      ('A' == event.srcElement.tagName && event.shiftKey)
+      ("A" == event.srcElement.tagName && event.shiftKey)
     ) || (event.returnValue = false) //shift + 点击a标签
-  )
-})
-;[
-  //禁止右键、选择、复制
-  ('contextmenu', 'selectstart', 'copy')
-].forEach(function(ev) {
+  );
+});
+
+//禁止右键、选择、复制
+[("contextmenu", "selectstart", "copy")].forEach(function(ev) {
   document.addEventListener(ev, function(event) {
-    return (event.returnValue = false)
-  })
-})
+    return (event.returnValue = false);
+  });
+});
 
 //手机端判断浏览器类型
 const BrowserInfo = {
@@ -210,4 +209,39 @@ const BrowserInfo = {
   isWeixin: Boolean(navigator.userAgent.match(/MicroMessenger/gi)),
   isAli: Boolean(navigator.userAgent.match(/AlipayClient/gi)),
   isPhone: Boolean(/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent))
-}
+};
+
+//利用performance.timing进行性能分析
+window.onload = function() {
+  setTimeout(function() {
+    let t = performance.timing;
+    console.log(
+      "DNS查询耗时 ：" + (t.domainLookupEnd - t.domainLookupStart).toFixed(0)
+    );
+    console.log("TCP链接耗时 ：" + (t.connectEnd - t.connectStart).toFixed(0));
+    console.log(
+      "request请求耗时 ：" + (t.responseEnd - t.responseStart).toFixed(0)
+    );
+    console.log(
+      "解析dom树耗时 ：" + (t.domComplete - t.domInteractive).toFixed(0)
+    );
+    console.log(
+      "白屏时间 ：" + (t.responseStart - t.navigationStart).toFixed(0)
+    );
+    console.log(
+      "domready时间 ：" +
+        (t.domContentLoadedEventEnd - t.navigationStart).toFixed(0)
+    );
+    console.log(
+      "onload时间 ：" + (t.loadEventEnd - t.navigationStart).toFixed(0)
+    );
+
+    if ((t = performance.memory)) {
+      console.log(
+        "js内存使用占比 ：" +
+          ((t.usedJSHeapSize / t.totalJSHeapSize) * 100).toFixed(2) +
+          "%"
+      );
+    }
+  });
+};

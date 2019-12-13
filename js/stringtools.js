@@ -4,17 +4,17 @@
  * @returns {Boolean}
  */
 function checkLength(v) {
-  let realLength = 0
-  let len = v.length
+  let realLength = 0;
+  let len = v.length;
   for (let i = 0; i < len; i++) {
-    let charCode = v.charCodeAt(i)
+    let charCode = v.charCodeAt(i);
     if (charCode >= 0 && charCode <= 128) {
-      realLength += 1
+      realLength += 1;
     } else {
-      realLength += 2
+      realLength += 2;
     }
   }
-  return realLength
+  return realLength;
 }
 
 /**
@@ -23,15 +23,15 @@ function checkLength(v) {
  * @returns {string} result string
  */
 function getRandomStr(length = 8) {
-  let str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  str += 'abcdefghijklmnopqrstuvwxyz'
-  str += '1234567890-_'
-  let result = ''
+  let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  str += "abcdefghijklmnopqrstuvwxyz";
+  str += "1234567890-_";
+  let result = "";
   for (let i = 0; i < str.length; i++) {
-    let random = Math.floor(Math.random() * str.length)
-    result += str.substr(random, random + 1)
+    let random = Math.floor(Math.random() * str.length);
+    result += str.substr(random, random + 1);
   }
-  return result
+  return result;
 }
 
 /**
@@ -40,10 +40,10 @@ function getRandomStr(length = 8) {
  * @returns {string} result string
  */
 function outputMuitiLineString(func) {
-  let arr = func.toString().split('\n')
-  return arr.slice(1, arr.length - 1).join('\n')
+  let arr = func.toString().split("\n");
+  return arr.slice(1, arr.length - 1).join("\n");
 }
-console.log(outputMuitiLineString(outputMuitiLineString))
+console.log(outputMuitiLineString(outputMuitiLineString));
 
 /**
  * @description  get symbols
@@ -51,22 +51,22 @@ console.log(outputMuitiLineString(outputMuitiLineString))
  * @returns {string} result string
  */
 function getSymbols(str) {
-  let length = str.length
-  let index = -1
-  let output = []
-  let character
-  let charCode
+  let length = str.length;
+  let index = -1;
+  let output = [];
+  let character;
+  let charCode;
   while (++index < length) {
-    character = str.charAt(index)
-    charCode = character.charCodeAt(0)
+    character = str.charAt(index);
+    charCode = character.charCodeAt(0);
     //those characters occupy two bytes
     if (charCode >= 0xd800 && charCode <= 0xdbff) {
-      output.push(character + str.charAt(++index))
+      output.push(character + str.charAt(++index));
     } else {
-      output.push(character)
+      output.push(character);
     }
   }
-  return output
+  return output;
 }
 //let s = '\uD834\uDF06'
 //console.log(s);
@@ -77,24 +77,24 @@ function getSymbols(str) {
  * @returns {string} reverse string
  */
 String.prototype.reverse = function() {
-  return Array.prototype.reverse.apply(this.split('')).join('')
-}
+  return Array.prototype.reverse.apply(this.split("")).join("");
+};
 
 /**
  * @description  simulateTrim
  * @returns {string} result string
  */
 String.prototype.simulateTrim1 = function() {
-  return this.replace(/^\s+|\s+$/g, '')
-}
+  return this.replace(/^\s+|\s+$/g, "");
+};
 
 /**
  * @description  simulateTrim
  * @returns {string} result string
  */
 String.prototype.simulateTrim2 = function() {
-  return this == null ? '' : ''.trim.call(this)
-}
+  return this == null ? "" : "".trim.call(this);
+};
 
 /**
  * @param {number} num want to be searched
@@ -103,7 +103,7 @@ String.prototype.simulateTrim2 = function() {
  * @returns {array} result array
  */
 function repeatStr(num, str) {
-  return new Array(num + 1).join(str)
+  return new Array(num + 1).join(str);
 }
 
 /**
@@ -113,34 +113,37 @@ function repeatStr(num, str) {
  * @return {string} result string
  */
 function digitUppercase(n) {
-  let fraction = ['角', '分']
-  let digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
-  let unit = [['元', '万', '亿'], ['', '拾', '佰', '仟']]
-  let head = n < 0 ? '欠' : ''
-  n = Math.abs(n)
-  let s = ''
+  let fraction = ["角", "分"];
+  let digit = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+  let unit = [
+    ["元", "万", "亿"],
+    ["", "拾", "佰", "仟"]
+  ];
+  let head = n < 0 ? "欠" : "";
+  n = Math.abs(n);
+  let s = "";
   for (let i = 0; i < fraction.length; i++) {
     s += (
       digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]
-    ).replace(/零./, '')
+    ).replace(/零./, "");
   }
-  s = s || '整'
-  n = Math.floor(n)
+  s = s || "整";
+  n = Math.floor(n);
   for (let i = 0; i < unit[0].length && n > 0; i++) {
-    let p = ''
+    let p = "";
     for (let j = 0; j < unit[1].length && n > 0; j++) {
-      p = digit[n % 10] + unit[1][j] + p
-      n = Math.floor(n / 10)
+      p = digit[n % 10] + unit[1][j] + p;
+      n = Math.floor(n / 10);
     }
-    s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s
+    s = p.replace(/(零.)*零$/, "").replace(/^$/, "零") + unit[0][i] + s;
   }
   return (
     head +
     s
-      .replace(/(零.)*零元/, '元')
-      .replace(/(零.)+/g, '零')
-      .replace(/^整$/, '零元整')
-  )
+      .replace(/(零.)*零元/, "元")
+      .replace(/(零.)+/g, "零")
+      .replace(/^整$/, "零元整")
+  );
 }
 
 /**
@@ -151,67 +154,74 @@ function digitUppercase(n) {
  * @returns {*}
  */
 function cutString(str, len, suffix) {
-  if (!str) return ''
-  if (len <= 0) return ''
-  if (!suffix) suffix = ''
-  let templen = 0
+  if (!str) return "";
+  if (len <= 0) return "";
+  if (!suffix) suffix = "";
+  let templen = 0;
   for (let i = 0; i < str.length; i++) {
     if (str.charCodeAt(i) > 255) {
-      templen += 2
+      templen += 2;
     } else {
-      templen++
+      templen++;
     }
     if (templen == len) {
-      return str.substring(0, i + 1) + suffix
+      return str.substring(0, i + 1) + suffix;
       //handle unicode character
     } else if (templen > len) {
-      return str.substring(0, i) + suffix
+      return str.substring(0, i) + suffix;
     }
   }
-  return str
+  return str;
 }
 
 //横线转驼峰命名
 function camelize(str) {
   return str.replace(/-(\w)/g, function(_, c) {
-    return c ? c.toUpperCase() : ''
-  })
+    return c ? c.toUpperCase() : "";
+  });
 }
 
 //驼峰命名转横线命名：拆分字符串，使用 - 相连，并且转换为小写
 function hyphenate(str) {
-  return str.replace(/\B([A-Z])/g, '-$1').toLowerCase()
+  return str.replace(/\B([A-Z])/g, "-$1").toLowerCase();
 }
 
 //字符串首位大写
 function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 //生成随机UID
 const genUid = () => {
-  const length = 20
-  const genUid.soup_ =
-  '!#$%()*+,-./:;=?@[]^_`{|}~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  const soupLength = genUid.soup_.length
-  const id = []
+  const length = 20;
+  const genUid =
+    "!#$%()*+,-./:;=?@[]^_`{|}~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const soupLength = genUid.soup_.length;
+  const id = [];
   for (let i = 0; i < length; i++) {
-    id[i] = genUid.soup_.charAt(Math.random() * soupLength)
+    id[i] = genUid.soup_.charAt(Math.random() * soupLength);
   }
-  return id.join('')
-}
+  return id.join("");
+};
 
 //格式化金钱
-const ThousandNum = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+const ThousandNum = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 //生成随机ID
-const RandomId = len => Math.random().toString(36).substr(3, len)
+const RandomId = len =>
+  Math.random()
+    .toString(36)
+    .substr(3, len);
 
 //生成随机HEX色值
-const RandomColor = () => "#" + Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0")
+const RandomColor = () =>
+  "#" +
+  Math.floor(Math.random() * 0xffffff)
+    .toString(16)
+    .padEnd(6, "0");
 
 //生成星级评分
-const StartScore = rate => "★★★★★☆☆☆☆☆".slice(5 - rate, 10 - rate)
+const StartScore = rate => "★★★★★☆☆☆☆☆".slice(5 - rate, 10 - rate);
 
 //操作URL查询参数
-const params = new URLSearchParams(location.search.replace(/\?/ig, "")); // location.search = "?name=young&sex=male"
+const params = new URLSearchParams(location.search.replace(/\?/gi, "")); // location.search = "?name=young&sex=male"
