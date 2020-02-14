@@ -4,13 +4,13 @@
  * @return {any} result
  */
 Function.prototype.simulateCall = function(context) {
-  var context = context || window
-  context.fn = this
-  var args = [].slice.call(arguments, 1)
-  var result = eval('context.fn(' + args + ')')
-  //delete temporary attribute
-  delete context.fn
-  return result
+	var context = context || window
+	context.fn = this
+	var args = [].slice.call(arguments, 1)
+	var result = eval('context.fn(' + args + ')')
+	//delete temporary attribute
+	delete context.fn
+	return result
 }
 
 /**
@@ -20,17 +20,17 @@ Function.prototype.simulateCall = function(context) {
  * @return {any} result
  */
 Function.prototype.simulateApply = function(context, arr) {
-  var context = context || window
-  context.fn = this
-  var result
-  if (!arr) {
-    result = context.fn()
-  } else {
-    var args = [].slice.call(arguments, 0)
-    result = eval('context.fn(' + args + ')')
-  }
-  delete context.fn
-  return result
+	var context = context || window
+	context.fn = this
+	var result
+	if (!arr) {
+		result = context.fn()
+	} else {
+		var args = [].slice.call(arguments, 0)
+		result = eval('context.fn(' + args + ')')
+	}
+	delete context.fn
+	return result
 }
 // var name = "jack";
 // function test() {
@@ -43,12 +43,12 @@ Function.prototype.simulateApply = function(context, arr) {
  * @return {function} function
  */
 Function.prototype.simulateBindBasic = function() {
-  var fn = this
-  var context = arguments[0]
-  var args = [].slice.call(arguments, 1)
-  return function() {
-    return fn.apply(context, args.concat([].slice.call(arguments, 0)))
-  }
+	var fn = this
+	var context = arguments[0]
+	var args = [].slice.call(arguments, 1)
+	return function() {
+		return fn.apply(context, args.concat([].slice.call(arguments, 0)))
+	}
 }
 
 /**
@@ -58,17 +58,17 @@ Function.prototype.simulateBindBasic = function() {
  * @return {function} function
  */
 Function.prototype.simulateBindAdvanced = function() {
-  var fn = this
-  var context = arguments[0]
-  var args = [].slice.call(arguments, 1)
-  var temp = function() {}
-  var F = function() {
-    var _args = [].slice.call(arguments, 0)
-    return fn.apply(this instanceof temp ? this : context, args.concat(_args))
-  }
-  temp.prototype = fn.prototype
-  F.prototype = new temp()
-  return F
+	var fn = this
+	var context = arguments[0]
+	var args = [].slice.call(arguments, 1)
+	var temp = function() {}
+	var F = function() {
+		var _args = [].slice.call(arguments, 0)
+		return fn.apply(this instanceof temp ? this : context, args.concat(_args))
+	}
+	temp.prototype = fn.prototype
+	F.prototype = new temp()
+	return F
 }
 // function showValue(name,age) {
 //     console.log("-----" + this.value + " " + name + " " + age);
@@ -83,36 +83,36 @@ Function.prototype.simulateBindAdvanced = function() {
  * @return {any} function result
  */
 function createXHR() {
-  var xhr = null
-  if (XMLHttpRequest) {
-    xhr = new XMLHttpRequest()
-    createXHR = function() {
-      return new XMLHttpRequest()
-    }
-  } else if (ActiveXObject) {
-    var versions = [
-        'MSXML2.XMLHttp.6.0',
-        'MSXML2.XMLHttp.3.0',
-        'MSXML2.XMLHttp'
-      ],
-      len = versions.length,
-      activeStr,
-      i
-    for (i = 0, len; i < len; i++) {
-      try {
-        new ActiveXObject(versions[i])
-        activeStr = versions[i]
-        break
-      } catch (ex) {
-        //ignore
-      }
-    }
-    xhr = new ActiveXObject(activeStr)
-    createXHR = function() {
-      return new ActiveXObject(activeStr)
-    }
-  }
-  return xhr
+	var xhr = null
+	if (XMLHttpRequest) {
+		xhr = new XMLHttpRequest()
+		createXHR = function() {
+			return new XMLHttpRequest()
+		}
+	} else if (ActiveXObject) {
+		var versions = [
+				'MSXML2.XMLHttp.6.0',
+				'MSXML2.XMLHttp.3.0',
+				'MSXML2.XMLHttp'
+			],
+			len = versions.length,
+			activeStr,
+			i
+		for (i = 0, len; i < len; i++) {
+			try {
+				new ActiveXObject(versions[i])
+				activeStr = versions[i]
+				break
+			} catch (ex) {
+				//ignore
+			}
+		}
+		xhr = new ActiveXObject(activeStr)
+		createXHR = function() {
+			return new ActiveXObject(activeStr)
+		}
+	}
+	return xhr
 }
 //var aaa = createXHR();
 //console.log(createXHR);
@@ -124,36 +124,36 @@ function createXHR() {
  * @return {function} function
  */
 var curryfunc = function(fn) {
-  //outer arguments, except arguments[0] is fn
-  var args = Array.prototype.slice.call(arguments, 1)
-  return function() {
-    //inner arguments
-    var innerArgs = Array.prototype.slice.call(arguments)
-    //contact
-    var finalArgs = args.concat(innerArgs)
-    return fn.apply(null, finalArgs)
-  }
+	//outer arguments, except arguments[0] is fn
+	var args = Array.prototype.slice.call(arguments, 1)
+	return function() {
+		//inner arguments
+		var innerArgs = Array.prototype.slice.call(arguments)
+		//contact
+		var finalArgs = args.concat(innerArgs)
+		return fn.apply(null, finalArgs)
+	}
 }
 var add = function() {
-  var args = Array.prototype.slice.call(arguments)
-  var sum = 0
-  for (var i = 0; i < args.length; i++) {
-    sum += args[i]
-  }
-  return sum
+	var args = Array.prototype.slice.call(arguments)
+	var sum = 0
+	for (var i = 0; i < args.length; i++) {
+		sum += args[i]
+	}
+	return sum
 }
 //var curryAdd=curryfunc(add,3,4,5);
 //console.log(curryAdd(6,7));
 
 var curryDelay = function(fn) {
-  var args = Array.prototype.slice.call(arguments, 1)
-  return function() {
-    if (arguments.length == 0) {
-      return fn.apply(null, args)
-    } else {
-      args = args.concat(Array.prototype.slice.call(arguments))
-    }
-  }
+	var args = Array.prototype.slice.call(arguments, 1)
+	return function() {
+		if (arguments.length == 0) {
+			return fn.apply(null, args)
+		} else {
+			args = args.concat(Array.prototype.slice.call(arguments))
+		}
+	}
 }
 var curryDelayAdd = curryDelay(add, 3, 4, 5)
 curryDelayAdd(6)
@@ -166,22 +166,22 @@ curryDelayAdd(7)
  * @return {function} function or the result of callback
  */
 function curryAdvanced(func) {
-  var l = func.length
-  return function curried() {
-    var args = [].slice.call(arguments)
-    if (args.length < l) {
-      return function() {
-        var argsInner = [].slice.call(arguments)
-        return curried.apply(this, args.concat(argsInner))
-      }
-    } else {
-      return func.apply(this, args)
-    }
-  }
+	var l = func.length
+	return function curried() {
+		var args = [].slice.call(arguments)
+		if (args.length < l) {
+			return function() {
+				var argsInner = [].slice.call(arguments)
+				return curried.apply(this, args.concat(argsInner))
+			}
+		} else {
+			return func.apply(this, args)
+		}
+	}
 }
 
 var f = function(a, b, c) {
-  return console.log([a, b, c])
+	return console.log([a, b, c])
 }
 
 var curried = curryAdvanced(f)
@@ -194,16 +194,16 @@ var curried = curryAdvanced(f)
  * @return {function} function
  */
 function memorize(fn) {
-  var cache = {}
-  return function() {
-    key = arguments.length + [].join.call(arguments)
-    if (cache[key]) {
-      return cache[key]
-    } else {
-      cache[key] = fn.apply(this, arguments)
-      return cache[key]
-    }
-  }
+	var cache = {}
+	return function() {
+		key = arguments.length + [].join.call(arguments)
+		if (cache[key]) {
+			return cache[key]
+		} else {
+			cache[key] = fn.apply(this, arguments)
+			return cache[key]
+		}
+	}
 }
 //  console.time("first");
 //  console.log(caculatefactorial(10));
@@ -232,76 +232,172 @@ function memorize(fn) {
  * @return {function}  新的节流函数
  */
 function throttle(delay, noTrailing, callback, debounceMode) {
-  // After wrapper has stopped being called, this timeout ensures that
-  // `callback` is executed at the proper times in `throttle` and `end`
-  // debounce modes.
-  var timeoutID
+	// After wrapper has stopped being called, this timeout ensures that
+	// `callback` is executed at the proper times in `throttle` and `end`
+	// debounce modes.
+	var timeoutID
 
-  // Keep track of the last time `callback` was executed.
-  var lastExec = 0
+	// Keep track of the last time `callback` was executed.
+	var lastExec = 0
 
-  // `noTrailing` defaults to falsy.
-  if (typeof noTrailing !== 'boolean') {
-    debounceMode = callback
-    callback = noTrailing
-    noTrailing = undefined
-  }
+	// `noTrailing` defaults to falsy.
+	if (typeof noTrailing !== 'boolean') {
+		debounceMode = callback
+		callback = noTrailing
+		noTrailing = undefined
+	}
 
-  // The `wrapper` function encapsulates all of the throttling / debouncing
-  // functionality and when executed will limit the rate at which `callback`
-  // is executed.
-  function wrapper() {
-    var self = this
-    var elapsed = Number(new Date()) - lastExec
-    var args = arguments
+	// The `wrapper` function encapsulates all of the throttling / debouncing
+	// functionality and when executed will limit the rate at which `callback`
+	// is executed.
+	function wrapper() {
+		var self = this
+		var elapsed = Number(new Date()) - lastExec
+		var args = arguments
 
-    // Execute `callback` and update the `lastExec` timestamp.
-    function exec() {
-      lastExec = Number(new Date())
-      callback.apply(self, args)
-    }
+		// Execute `callback` and update the `lastExec` timestamp.
+		function exec() {
+			lastExec = Number(new Date())
+			callback.apply(self, args)
+		}
 
-    // If `debounceMode` is true (at begin) this is used to clear the flag
-    // to allow future `callback` executions.
-    function clear() {
-      timeoutID = undefined
-    }
+		// If `debounceMode` is true (at begin) this is used to clear the flag
+		// to allow future `callback` executions.
+		function clear() {
+			timeoutID = undefined
+		}
 
-    if (debounceMode && !timeoutID) {
-      // Since `wrapper` is being called for the first time and
-      // `debounceMode` is true (at begin), execute `callback`.
-      exec()
-    }
+		if (debounceMode && !timeoutID) {
+			// Since `wrapper` is being called for the first time and
+			// `debounceMode` is true (at begin), execute `callback`.
+			exec()
+		}
 
-    // Clear any existing timeout.
-    if (timeoutID) {
-      clearTimeout(timeoutID)
-    }
+		// Clear any existing timeout.
+		if (timeoutID) {
+			clearTimeout(timeoutID)
+		}
 
-    if (debounceMode === undefined && elapsed > delay) {
-      // In throttle mode, if `delay` time has been exceeded, execute
-      // `callback`.
-      exec()
-    } else if (noTrailing !== true) {
-      // In trailing throttle mode, since `delay` time has not been
-      // exceeded, schedule `callback` to execute `delay` ms after most
-      // recent execution.
-      //
-      // If `debounceMode` is true (at begin), schedule `clear` to execute
-      // after `delay` ms.
-      //
-      // If `debounceMode` is false (at end), schedule `callback` to
-      // execute after `delay` ms.
-      timeoutID = setTimeout(
-        debounceMode ? clear : exec,
-        debounceMode === undefined ? delay - elapsed : delay
-      )
-    }
-  }
-  // Return the wrapper function.
-  return wrapper
+		if (debounceMode === undefined && elapsed > delay) {
+			// In throttle mode, if `delay` time has been exceeded, execute
+			// `callback`.
+			exec()
+		} else if (noTrailing !== true) {
+			// In trailing throttle mode, since `delay` time has not been
+			// exceeded, schedule `callback` to execute `delay` ms after most
+			// recent execution.
+			//
+			// If `debounceMode` is true (at begin), schedule `clear` to execute
+			// after `delay` ms.
+			//
+			// If `debounceMode` is false (at end), schedule `callback` to
+			// execute after `delay` ms.
+			timeoutID = setTimeout(
+				debounceMode ? clear : exec,
+				debounceMode === undefined ? delay - elapsed : delay
+			)
+		}
+	}
+	// Return the wrapper function.
+	return wrapper
 }
 
+function simulateThrottle(fn, interval = 300) {
+	let last = 0
+	return (...args) => {
+		let now = +new Date()
+		if (now - last >= interval) {
+			fn.apply(this, args)
+			last = +new Date()
+		}
+	}
+}
+const betterScrollThrottle = simulateThrottle(
+	() => console.log('触发了滚动事件'),
+	1000
+)
+document.addEventListener('scroll', betterScrollThrottle)
+function simulateThrottle(fn, interval = 300) {
+	let last = 0
+	return (...args) => {
+		let now = +new Date()
+		if (now - last >= interval) {
+			fn.apply(this, args)
+			last = +new Date()
+		}
+	}
+}
+const betterScrollThrottle = simulateThrottle(
+	() => console.log('触发了滚动事件'),
+	1000
+)
+document.addEventListener('scroll', betterScrollThrottle)
+function simulatDebounce(fn, delay = 300) {
+	let timer
+	return (...args) => {
+		clearTimeout(timer)
+
+		timer = setTimeout(() => {
+			fn.apply(this, args)
+		}, delay)
+	}
+}
+
+const betterScrollDebounce = simulatDebounce(
+	() => console.log('触发了滚动事件'),
+	1000
+)
+document.addEventListener('scroll', betterScrollDebounce)
+
+//用Throttle来优化Debounce
+const DebounceAdvanced = (fn, delay = 300) => {
+	let last = 0,
+		timer = null
+
+	return function() {
+		let context = this
+		let args = arguments
+		let now = +new Date()
+
+		if (now - last < delay) {
+			// 如果时间间隔小于我们设定的时间间隔阈值,则为本次触发操作设立一个新的定时器
+			// 总会执行一次 防止用户认为'假死'
+			clearTimeout(timer)
+			timer = setTimeout(function() {
+				fn.apply(context, args)
+				last = now
+			}, delay)
+		} else {
+			fn.apply(context, args)
+			last = now
+		}
+	}
+}
+
+//用Throttle来优化Debounce
+function DebounceAdvanced(fn, delay = 300) {
+	let last = 0,
+		timer = null
+
+	return function() {
+		let context = this
+		let args = arguments
+		let now = +new Date()
+
+		if (now - last < delay) {
+			// 如果时间间隔小于我们设定的时间间隔阈值,则为本次触发操作设立一个新的定时器
+			// 总会执行一次 防止用户认为'假死'
+			clearTimeout(timer)
+			timer = setTimeout(function() {
+				fn.apply(context, args)
+				last = now
+			}, delay)
+		} else {
+			fn.apply(context, args)
+			last = now
+		}
+	}
+}
 /**
  * @description 函数防抖
  * 与throttle不同的是，debounce保证一个函数在多少毫秒内不再被触发，只会执行一次，
@@ -317,43 +413,43 @@ function throttle(delay, noTrailing, callback, debounceMode) {
  * @return {Function} 新的防抖函数。
  */
 function debounce(delay, atBegin, callback) {
-  return callback === undefined
-    ? throttle(delay, atBegin, false)
-    : throttle(delay, callback, atBegin !== false)
+	return callback === undefined
+		? throttle(delay, atBegin, false)
+		: throttle(delay, callback, atBegin !== false)
 }
 
 function debounceSimple(fn, delay = 1000) {
-  let timer
-  return function() {
-    var context = this
-    var args = arguments
-    clearTimeout(timer)
-    // 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
-    // 再过 delay 毫秒就执行 func
-    timer = setTimeout(function() {
-      fn.apply(context, args)
-    }, delay)
-  }
+	let timer
+	return function() {
+		var context = this
+		var args = arguments
+		clearTimeout(timer)
+		// 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+		// 再过 delay 毫秒就执行 func
+		timer = setTimeout(function() {
+			fn.apply(context, args)
+		}, delay)
+	}
 }
 
 function throttleSimple(func, wait = 100) {
-  let timer = null
-  let previous
-  return function() {
-    const context = this
-    const args = arguments
-    const now = +new Date()
-    if (previous && now < previous + wait) {
-      clearTimeout(timer)
-      timer = setTimeout(function() {
-        previous = now
-        func.apply(context, args)
-      }, wait)
-    } else {
-      previous = now
-      func.apply(context, args)
-    }
-  }
+	let timer = null
+	let previous
+	return function() {
+		const context = this
+		const args = arguments
+		const now = +new Date()
+		if (previous && now < previous + wait) {
+			clearTimeout(timer)
+			timer = setTimeout(function() {
+				previous = now
+				func.apply(context, args)
+			}, wait)
+		} else {
+			previous = now
+			func.apply(context, args)
+		}
+	}
 }
 
 /**
@@ -363,16 +459,16 @@ function throttleSimple(func, wait = 100) {
  * @returns flatten array
  */
 function flattenDepth(array, depth = 1) {
-  let result = []
-  array.forEach(item => {
-    let d = depth
-    if (Array.isArray(item) && d > 0) {
-      result.push(...flattenDepth(item, --d))
-    } else {
-      result.push(item)
-    }
-  })
-  return result
+	let result = []
+	array.forEach(item => {
+		let d = depth
+		if (Array.isArray(item) && d > 0) {
+			result.push(...flattenDepth(item, --d))
+		} else {
+			result.push(item)
+		}
+	})
+	return result
 }
 // console.log(flattenDepth([1, [2, [3, [4]], 5]]));
 // console.log(flattenDepth([1, [2, [3, [4]], 5]], 2));
@@ -380,6 +476,65 @@ function flattenDepth(array, depth = 1) {
 
 //优雅处理Async/Await参数
 function AsyncTo(promise) {
-  return promise.then(data => [null, data]).catch(err => [err])
+	return promise.then(data => [null, data]).catch(err => [err])
 }
 const [err, res] = await AsyncTo(Func())
+
+// 轮训函数
+function poll(fn, timeout = 2000, interval = 100) {
+	var endTime = Number(new Date()) + timeout
+
+	var checkCondition = function(resolve, reject) {
+		// 如果条件满足，就返回结果
+		var result = fn()
+		if (result) {
+			resolve(result)
+		}
+		// 如果条件不满足，且没有超时，就等待 interval ms 后再继续检查一遍
+		else if (Number(new Date()) < endTime) {
+			setTimeout(checkCondition, interval, resolve, reject)
+		}
+		// 调用时间过长，或调用出错，就报错返回
+		else {
+			reject(new Error('timed out for ' + fn + ': ' + arguments))
+		}
+	}
+
+	return new Promise(checkCondition)
+}
+
+// 使用：轮训，确保元素为可见时，再进行后续逻辑处理
+poll(
+	function() {
+		return document.getElementById('lightbox').offsetWidth > 0
+	},
+	2000,
+	150
+)
+	.then(function(data) {
+		// 完成轮训，处理返回的数据
+	})
+	.catch(function(err) {
+		// 超时出错，处理错误
+	})
+
+function once(fn, context) {
+	var result
+
+	return function() {
+		if (fn) {
+			result = fn.apply(context || this, arguments)
+			fn = null
+		}
+
+		return result
+	}
+}
+
+// 使用
+var canOnlyFireOnce = once(function() {
+	return 'Fired!'
+})
+
+canOnlyFireOnce() // "Fired!"
+canOnlyFireOnce() // "Fired!"
